@@ -4,6 +4,14 @@ All notable changes to the "date-util" will be documented in this file.
 
 ## [Unreleased]
 
+## [0.0.3] - 2024-01-07
+
+### Changed
+
+- Switch to pnpm.
+- Update dependencies.
+- Small updates related to tsconfig changes.
+
 ## [0.0.2] - 2023-06-11
 
 ### Changed
