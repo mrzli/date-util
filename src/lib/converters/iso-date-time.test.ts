@@ -159,9 +159,8 @@ describe('iso-date-time', () => {
 
     for (const example of EXAMPLES) {
       it(JSON.stringify(example), () => {
-        const expected = new Date(example.expected);
-        const actual = isoDateTimeToJsDate(example.input);
-        expect(actual).toEqual(expected);
+        const actual = isoDateTimeToJsDate(example.input).toISOString();
+        expect(actual).toEqual(example.expected);
       });
     }
   });

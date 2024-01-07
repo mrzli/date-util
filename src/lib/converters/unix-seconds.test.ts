@@ -53,9 +53,8 @@ describe('unix-seconds', () => {
 
     for (const example of EXAMPLES) {
       it(JSON.stringify(example), () => {
-        const expected = new Date(example.expected);
-        const actual = unixSecondsToJsDate(example.input);
-        expect(actual).toEqual(expected);
+        const actual = unixSecondsToJsDate(example.input).toISOString();
+        expect(actual).toEqual(example.expected);
       });
     }
   });

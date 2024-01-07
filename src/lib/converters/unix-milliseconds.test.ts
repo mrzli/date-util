@@ -17,35 +17,6 @@ import {
 } from '../types';
 
 describe('unix-milliseconds', () => {
-  describe('unixMillisecondsToJsDate()', () => {
-    interface Example {
-      readonly input: number;
-      readonly expected: string;
-    }
-
-    const EXAMPLES: readonly Example[] = [
-      {
-        input: 1_640_995_200_000,
-        expected: '2022-01-01T00:00:00.000Z',
-      },
-      {
-        input: 1_640_998_861_001,
-        expected: '2022-01-01T01:01:01.001Z',
-      },
-      {
-        input: 1_704_066_312_614,
-        expected: '2023-12-31T23:45:12.614Z',
-      },
-    ];
-
-    for (const example of EXAMPLES) {
-      it(JSON.stringify(example), () => {
-        const actual = unixMillisecondsToJsDate(example.input).toISOString();
-        expect(actual).toEqual(example.expected);
-      });
-    }
-  });
-
   describe('unixMillisecondsToUnixSeconds()', () => {
     interface Example {
       readonly input: number;
@@ -70,6 +41,35 @@ describe('unix-milliseconds', () => {
     for (const example of EXAMPLES) {
       it(JSON.stringify(example), () => {
         const actual = unixMillisecondsToUnixSeconds(example.input);
+        expect(actual).toEqual(example.expected);
+      });
+    }
+  });
+
+  describe('unixMillisecondsToJsDate()', () => {
+    interface Example {
+      readonly input: number;
+      readonly expected: string;
+    }
+
+    const EXAMPLES: readonly Example[] = [
+      {
+        input: 1_640_995_200_000,
+        expected: '2022-01-01T00:00:00.000Z',
+      },
+      {
+        input: 1_640_998_861_001,
+        expected: '2022-01-01T01:01:01.001Z',
+      },
+      {
+        input: 1_704_066_312_614,
+        expected: '2023-12-31T23:45:12.614Z',
+      },
+    ];
+
+    for (const example of EXAMPLES) {
+      it(JSON.stringify(example), () => {
+        const actual = unixMillisecondsToJsDate(example.input).toISOString();
         expect(actual).toEqual(example.expected);
       });
     }
