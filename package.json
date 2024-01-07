@@ -30,6 +30,7 @@
     "pub": "pnpm run pac && pnpm run pub-only"
   },
   "dependencies": {
+    "luxon": "^3.4.4",
     "tslib": "^2.6.2"
   },
   "devDependencies": {
@@ -40,6 +41,7 @@
     "@gmjs/tsconfig": "^1.0.12",
     "@jest/globals": "^29.7.0",
     "@types/eslint": "^8.56.1",
+    "@types/luxon": "^3.4.0",
     "@typescript-eslint/eslint-plugin": "^6.18.0",
     "@typescript-eslint/parser": "^6.18.0",
     "eslint": "^8.56.0",
@@ -52,6 +54,7 @@
     "shx": "^0.3.4",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.2",
+    "type-fest": "^4.9.0",
     "typescript": "^5.3.3"
   },
   "engines": {
