@@ -8,7 +8,13 @@ import {
   unixMillisecondsToJsDate,
   unixMillisecondsToUnixSeconds,
 } from './unix-milliseconds';
-import { DateObject, DateObjectTz, ToIsoDateOptions, ToIsoDateTimeOptions, ToIsoTimeOptions } from '../types';
+import {
+  DateObject,
+  DateObjectTz,
+  ToIsoDateOptions,
+  ToIsoDateTimeOptions,
+  ToIsoTimeOptions,
+} from '../types';
 
 describe('unix-milliseconds', () => {
   describe('unixMillisecondsToJsDate()', () => {
