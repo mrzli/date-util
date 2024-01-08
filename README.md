@@ -2,14 +2,14 @@
 
 This library implements functions for:
 
-- Manipulating dates.
 - Converting dates between various forms.
+- Manipulating dates.
 
 Date forms which are supported:
 
 - `JsDate` - Native JavaScript `Date` object.
-- `UnixMilliseconds` - Timestamps representing number of milliseconds since the Unix epoch.
-- `UnixSeconds` - Timestamps representing number of seconds since the Unix epoch.
+- `UnixMilliseconds` - Timestamp representing number of milliseconds since the Unix epoch.
+- `UnixSeconds` - Timestamp representing number of seconds since the Unix epoch.
 - `IsoDateTime` - ISO datetime string.
 - `DateObject` - See [DateObject](#dateobject).
 - `DateObjectTz` - See [DateObjectTz](#dateobjecttz).
@@ -22,15 +22,175 @@ npm install --save @gmjs/date-util
 
 ## API
 
+### Converters General Information
+
+This section contains information that apply to converter functions in general.
+
+#### Groups
+
+There are six supported date forms. If we group converter function by input date form, we get six groups:
+
+- `dateObjectTo*` - [DateObject](#dateobject) to other forms.
+- `dateObjectTzTo*` - [DateObjectTz](#dateobjecttz) to other forms.
+- `isoDateTimeTo*` - ISO datetime string to other forms.
+- `jsDateTo*` - Native JavaScript `Date` object to other forms.
+- `unixMillisecondsTo*` - Unix milliseconds timestamp to other forms.
+- `unixSecondsTo*` - Unix seconds timestamp to other forms.
+
+In each group, there is a function for converting to each of the other five remaining date forms.
+
+Additionally there are two function for converting into the [ISO Partial Forms](#partial-date-forms), `IsoDate` and `IsoTime`. These partial forms are not intended to be used as inputs in conversions, only for outputs (formatting).
+
+It usually makes no sense to 'convert' from one date form to the same form - i.e. it would not make sense to have `unixMillisecondsToUnixMilliseconds` function - it would simply be an identity function.
+
+There is, however, a single exception to the above rule: [isoDateTimeToIsoDateTime](#isodatetimetoisodatetime) function. We have it because it can be used to change the format of the ISO datetime string, or to change the timezone offset while representing the same point in time.
+
+This means there are:
+
+- 6 groups of converter functions.
+- (6 - 1) = 5 functions in each group for converting to other forms.
+- 2 additional functions in each group for converting to [ISO Partial Forms](#partial-date-forms).
+- 1 additional function in total where output date form is the same as input date form - [isoDateTimeToIsoDateTime](#isodatetimetoisodatetime).
+- This all amounts to a total of 43 converter functions.
+
+#### Parameters
+
+##### Input Date
+
+All converter functions take the input date as the first parameter.
+
+##### Input Timezone
+
+All `dateObjectTo*` functions take `inputTimezone` as the second parameter. This is the missing piece of information information that is added to the input [DateObject](#dateobject) to make it a concrete date representation. See more info about [conversion requirements](#input-date-requirements-for-conversion), [concrete date forms](#concrete-date-forms), and [abstract date forms](#abstract-date-forms).
+
+No functions besides `dateObjectTo*` take `inputTimezone` as a parameter since all other full date forms are [concrete](#concrete-date-forms).
+
+##### Output Options
+
+All `*ToIso*` functions take `options` as the second parameter (or third parameter in case or `dateObjectTo*` functions). This is an optional object which contains options for output formatting.
+
+There are three types of `options` objects for the three target ISO forms: [ToIsoDateTimeOptions](#toisodatetimeoptions), [ToIsoDateOptions](#toisodateoptions), and [ToIsoTimeOptions](#toisotimeoptions).
+
+All of these types of options objects have a `timezone` field. This timezone is the timezone in which the output ISO string will be displayed. In other words, we want the output ISO string to to be the representation of the same point in time specified by input, but from the point of view of someone in the `timezone` timezone.
+
+Maybe the wording of the previous paragraph is not clear, so an example should help:
+
+```ts
+const input = 1_704_066_312_614; // 2023-12-31T23:45:12.614Z
+const output = unixMillisecondsToIsoDateTime(input, {
+  timezone: 'America/New_York',
+});
+console.log(output);
+// 2023-12-31T18:45:12-05:00
+```
+
+Above, the following happens:
+
+- We pass in a Unix milliseconds timestamp, `1_704_066_312_614`, which represents `2023-12-31T23:45:12.614Z`.
+- The output is that same point in time as seen from `America/New_York` timezone. It is earlier in the evening in New York, specifically `2023-12-31T18:45:12-05:00`.
+
+###### ISO DateTime
+
+`*ToIsoDateTime` takes [ToIsoDateTimeOptions](#toisodatetimeoptions) as the `options` parameter.
+
+Check the [object type description](#toisodatetimeoptions) for more information about what `timeFormat` and `offset` options are used for.
+
+If not otherwise specified, default values for [ToIsoDateTimeOptions](#toisodatetimeoptions) `options` are:
+
+```ts
+{
+  timeFormat: 'HH:mm:ss',
+  timezone: 'UTC',
+  offset: 'utc-zero-or-offset',
+}
+```
+
+###### ISO Date
+
+`*ToIsoDate` takes [ToIsoDateOptions](#toisodateoptions) as the `options` parameter.
+
+Check the [object type description](#toisodateoptions) for more information about what `format` is used for.
+
+If not otherwise specified, default values for [ToIsoDateOptions](#toisodateoptions) `options` are:
+
+```ts
+{
+  format: 'yyyy-MM-dd',
+  timezone: 'UTC',
+}
+```
+
+###### ISO Time
+
+`*ToIsoTime` takes [ToIsoTimeOptions](#toisotimeoptions) as the `options` parameter.
+
+Check the [object type description](#toisotimeoptions) for more information about what `format` is used for.
+
+If not otherwise specified, default values for [ToIsoTimeOptions](#toisotimeoptions) `options` are:
+
+```ts
+{
+  format: 'HH:mm:ss',
+  timezone: 'UTC',
+}
+```
+
+#### Output Timezone
+
+All `*ToDateObject` and `*ToDateObjectTz` functions take `timezone` as the second parameter (or third parameter in the case of `dateObjectToDateObjectTz`). This is the timezone in which the output [DateObject](#dateobject) or [DateObjectTz](#dateobjecttz) will be displayed.
+
+It functions the same way as the `options.timezone` described in [output options](#output-options) section.
+
+#### Input Date Requirements for Conversion
+
+To be able to convert date from one form to another, the date representation of the input form needs to be concrete (represent a specific point in time), or additional information needs to be provided to make it concrete.
+
+Foe example, `1_704_084_312` is a Unix milliseconds timestamp. It is a concrete date form, it represents a specific point in time - `2023-12-31T23:45:12.614Z`.
+
+If we just had `2023-12-31T23:45:12.614` and we were not able to make any assumptions about the timezone, that would be an abstract time.
+
+We would not be able to convert it to a Unix milliseconds timestamp, because that abstract time could represent multiple different concrete points in time, such as:
+
+```
+2023-12-31T23:45:12.614Z      => 2023-12-31T23:45:12.614Z
+2023-12-31T23:45:12.614+01:00 => 2023-12-31T22:45:12.614Z
+2023-12-31T23:45:12.614-01:00 => 2024-01-01T00:45:12.614Z
+...
+```
+
+#### Concrete Date Forms
+
+Out of the six supported date forms (`JsDate`, `UnixMilliseconds`, `UnixSeconds`, `IsoDateTime`, `DateObject`, `DateObjectTz`), all but [DateObject](#dateobject) represent concrete times - meaning a specific point in time.
+
+Even `IsoDateTime` without offset information - such as `2023-12-31T23:45:12.614` - is considered to represent a specific point in time when given as an input date, because (unlike in the example given in the previous section) we are interpreting ISO datetime strings without offset information as if they were in `UTC`.
+
+Therefore, `2023-12-31T23:45:12.614` would be interpreted as `2023-12-31T23:45:12.614Z`.
+
+#### Abstract Date Forms
+
+[DateObject](#dateobject) is the only abstract date form out of the six supported. While it has all the time components from `year` down to `millisecond`, it is missing `timezone` information to be able represent a specific point in time.
+
+Because of this, functions which convert from [DateObject](#dateobject) to other forms - i.e. `dateObjectTo*` - always take `inputTimezone` as a second parameter.
+
+As in other converter functions, the first parameter is always the input date form. The `inputTimezone` parameter fills in the missing [DateObject](#dateobject) information, and allows the conversion to happen.
+
+The `inputTimezone` parameter is always optional, and if not provided, it defaults to `UTC`.
+
+#### Partial Date Forms
+
+In addition to the six full date forms, there are two partial date forms - `IsoDate` and `IsoTime`. These represent only the date or time parts of the full ISO datetime string. Depending on the `format` option used when converting to these partial forms, they can even represent just a part of the date or time, such as month and day (`MM-dd`), or only minutes (`mm`).
+
+Most of such formats (all except the date ones starting with `yyyy`) don't contain full information which would be necessary to determine a specific point in time. This is not relevant in our discussion about concrete and abstract date forms since converter functions never take partial date forms as input. They are only used as output formats.
+
 ### Converters
 
-These are the functions for converting dates between various forms. Conversion between most pairs of forms are supported.
+Here is a list of functions for converting dates between various forms.
 
 #### `dateObjectToUnixMilliseconds`
 
 Converts from a [DateObject](#dateobject) to Unix milliseconds timestamp.
 
-It accepts `timezone` as a second parameter, which is optional and defaults to `UTC`. Since [DateObject](#dateobject) is not tied to a particular timezone, the `timezone` parameter is required to determine the point in time.
+Check [parameters](#parameters) section for more information.
 
 ```ts
 const input: DateObject = {
@@ -1051,9 +1211,9 @@ interface ToIsoDateOptions {
   - `yyyy-MM-dd` - Year, month and day are included.
   - `yyyy-MM` - Year and month are included.
   - `MM-dd` - Month and day are included.
-  - `yyyy` - Year is included.
-  - `MM` - Month is included.
-  - `dd` - Day is included.
+  - `yyyy` - Year only.
+  - `MM` - Month only.
+  - `dd` - Day only.
 
   ```ts
   type IsoDateFormat = 'yyyy-MM-dd' | 'yyyy-MM' | 'MM-dd' | 'yyyy' | 'MM' | 'dd';
@@ -1075,10 +1235,10 @@ interface ToIsoTimeOptions {
   - `HH:mm:ss.SSS` - Hours, minutes, seconds and milliseconds are included.
   - `HH:mm:ss` - Hours, minutes and seconds are included.
   - `HH:mm` - Hours and minutes are included.
-  - `HH` - Hours are included.
-  - `mm` - Minutes are included.
-  - `ss` - Seconds are included.
-  - `SSS` - Milliseconds are included.
+  - `HH` - Hours only.
+  - `mm` - Minutes only.
+  - `ss` - Seconds only.
+  - `SSS` - Milliseconds only.
 
   ```ts
   type IsoTimeFormat = 'HH:mm:ss.SSS' | 'HH:mm:ss' | 'HH:mm' | 'HH' | 'mm' | 'ss' | 'SSS';
