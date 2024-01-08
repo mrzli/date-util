@@ -601,7 +601,20 @@ If an invalid ISO datetime string is passed, and error is thrown.
 Valid examples:
 
 ```ts
-const inputs: readonly string[] = ['2023-12-31T23:45:12.614Z', '2023-12-31T23:45:12Z', '2023-12-31T23:45Z', '2023-12-31T23:45:12.614+00:00', '2023-12-31T23:45:12.614-01:00', '2023-12-31T23:45:12.614+01:00', '2023-12-31T23:45:12+01:00', '2023-12-31T23:45+01:00', '2023-12-31T23:45:12.614', '2023-12-31T23:45:12', '2023-12-31T23:45', '2024-01-01'];
+const inputs: readonly string[] = [
+  '2023-12-31T23:45:12.614Z', // millisecons with zero offset
+  '2023-12-31T23:45:12Z', // seconds with zero offset
+  '2023-12-31T23:45Z', // minutes with zero offset
+  '2023-12-31T23:45:12.614+00:00', // milliseconds with offset
+  '2023-12-31T23:45:12.614-01:00', // milliseconds with offset
+  '2023-12-31T23:45:12.614+01:00', // milliseconds with offset
+  '2023-12-31T23:45:12+01:00', // seconds with offset
+  '2023-12-31T23:45+01:00', // minutes with offset
+  '2023-12-31T23:45:12.614', // milliseconds without offset
+  '2023-12-31T23:45:12', // seconds without offset
+  '2023-12-31T23:45', // minutes without offset
+  '2024-01-01', // date only
+];
 
 const outputs = inputs.map((input) => isoDateTimeToUnixMilliseconds(input));
 console.log(outputs);
@@ -646,14 +659,14 @@ console.log(output);
 // 1_704_066_312
 ```
 
-#### `isoDateTimeToUnixSeconds`
+#### `isoDateTimeToJsDate`
 
 Converts from an ISO datetime string to native JavaScript `Date` object.
 
 Other than that, it works exactly the same as [isoDateTimeToUnixMilliseconds](#isodatetimetounixmilliseconds).
 
 ```ts
-const output = isoDateTimeToUnixSeconds('2023-12-31T23:45:12.614Z');
+const output = isoDateTimeToJsDate('2023-12-31T23:45:12.614Z');
 console.log(output);
 // 2023-12-31T23:45:12.614Z
 ```
@@ -685,7 +698,7 @@ Accepts the same kinds of ISO datetime input strings as [isoDateTimeToUnixMillis
 For a description of `options`, and more examples, see [dateObjectToIsoDate](#dateobjecttoisodate).
 
 ```ts
-const output = isoDateTimeToIsoDateTime('2023-12-31T23:45:12.614Z', {
+const output = isoDateTimeToIsoDate('2023-12-31T23:45:12.614Z', {
   format: 'yyyy-MM-dd',
   timezone: 'America/New_York',
 });
@@ -702,7 +715,7 @@ Accepts the same kinds of ISO datetime input strings as [isoDateTimeToUnixMillis
 For a description of `options`, and more examples, see [dateObjectToIsoTime](#dateobjecttoisotime).
 
 ```ts
-const output = isoDateTimeToIsoDateTime('2023-12-31T23:45:12.614Z', {
+const output = isoDateTimeToIsoTime('2023-12-31T23:45:12.614Z', {
   format: 'HH:mm:ss',
   timezone: 'America/New_York',
 });
@@ -753,6 +766,115 @@ It is very similar to [isoDateTimeToDateObject](#isodatetimetodateobject), but i
 
 ```ts
 const output = isoDateTimeToDateObject('2023-12-31T23:45:12.614', 'America/New_York');
+console.log(output);
+// {
+//   year: 2023,
+//   month: 12,
+//   day: 31,
+//   hour: 18,
+//   minute: 45,
+//   second: 12,
+//   millisecond: 614,
+//   timezone: 'America/New_York',
+// }
+```
+
+#### `unixMillisecondsToUnixSeconds`
+
+Converts Unix milliseconds timestamp to Unix seconds timestamp. It returns the whole number, i.e. the milliseconds part is truncated (seconds are not rounded).
+
+```ts
+const output = unixMillisecondsToUnixSeconds(1_704_066_312_614);
+console.log(output);
+// 1_704_066_312
+```
+
+#### `unixMillisecondsToJsDate`
+
+Converts Unix milliseconds timestamp to native JavaScript `Date` object.
+
+```ts
+const output = isoDateTimeToUnixSeconds(1_704_066_312_614);
+console.log(output);
+// 2023-12-31T23:45:12.614Z
+```
+
+#### `unixMillisecondsToIsoDateTime`
+
+Converts unix milliseconds timestamp to ISO datetime string.
+
+It accepts `options` as a second parameter. For more details, and more examples, see [dateObjectToIsoDateTime](#dateobjecttoisodatetime).
+
+```ts
+const output = unixMillisecondsToIsoDateTime(1_704_066_312_614, {
+  timeFormat: 'HH:mm:ss',
+  timezone: 'America/New_York',
+  offset: 'offset',
+});
+console.log(output);
+// 2024-01-01T04:45:12-05:00
+```
+
+#### `unixMillisecondsToIsoDate`
+
+Converts unix milliseconds timestamp to date part of the ISO datetime string.
+
+It accepts `options` as a second parameter. and more examples, see [dateObjectToIsoDate](#dateobjecttoisodate).
+
+```ts
+const output = unixMillisecondsToIsoDate(1_704_066_312_614, {
+  format: 'yyyy-MM-dd',
+  timezone: 'America/New_York',
+});
+console.log(output);
+// 2024-01-01
+```
+
+#### `unixMillisecondsToIsoTime`
+
+Converts unix milliseconds timestamp to time part of the ISO datetime string.
+
+It accepts `options` as a second parameter. and more examples, see [dateObjectToIsoTime](#dateobjecttoisotime).
+
+```ts
+const output = unixMillisecondsToIsoTime(1_704_066_312_614, {
+  format: 'HH:mm:ss',
+  timezone: 'America/New_York',
+});
+console.log(output);
+// 04:45:12
+```
+
+#### `unixMillisecondsToDateObject`
+
+Converts Unix milliseconds timestamp to [DateObject](#dateobject).
+
+Given the time instance specified by the input Unix milliseconds, the `timezone` parameter is used to determine the local time (meaning the values of `year`, `month`, `day`, `hour`, `minute`, `second` and `millisecond` fields) for that time point.
+
+`timezone` is optional, if not provided defaults to `UTC`.
+
+```ts
+const output = isoDateTimeToDateObject(1_704_066_312_614, 'America/New_York');
+console.log(output);
+// {
+//   year: 2023,
+//   month: 12,
+//   day: 31,
+//   hour: 18,
+//   minute: 45,
+//   second: 12,
+//   millisecond: 614,
+// }
+```
+
+#### `unixMillisecondsToDateObjectTz`
+
+Converts Unix milliseconds timestamp to [DateObjectTz](#dateobjecttz).
+
+It is very similar to [isoDateTimeToDateObject](#isodatetimetodateobject), but it returns a [DateObjectTz](#dateobjecttz) which contains the `timezone` field, and therefore represents a concrete point in time.
+
+```ts
+const output = isoDateTimeToDateObject(1_704_066_312_614, 'America/New_York');
 console.log(output);
 // {
 //   year: 2023,

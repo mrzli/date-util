@@ -12,12 +12,12 @@ import {
   toFinalIsoTimeOptions,
 } from './util';
 
-export function unixMillisecondsToJsDate(milliseconds: number): Date {
-  return new Date(milliseconds);
-}
-
 export function unixMillisecondsToUnixSeconds(milliseconds: number): number {
   return Math.floor(milliseconds / 1000);
+}
+
+export function unixMillisecondsToJsDate(milliseconds: number): Date {
+  return new Date(milliseconds);
 }
 
 export function unixMillisecondsToIsoDateTime(
