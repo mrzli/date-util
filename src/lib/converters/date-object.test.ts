@@ -31,7 +31,7 @@ describe('date-object', () => {
     interface Example {
       readonly input: {
         readonly value: DateObject;
-        readonly timezone: string | undefined;
+        readonly inputTimezone: string | undefined;
       };
       readonly expected: number;
     }
@@ -40,14 +40,14 @@ describe('date-object', () => {
       {
         input: {
           value: DATE_OBJECT,
-          timezone: undefined,
+          inputTimezone: undefined,
         },
         expected: 1_704_066_312_614,
       },
       {
         input: {
           value: DATE_OBJECT,
-          timezone: 'America/New_York',
+          inputTimezone: 'America/New_York',
         },
         expected: 1_704_084_312_614,
       },
@@ -55,8 +55,8 @@ describe('date-object', () => {
 
     for (const example of EXAMPLES) {
       it(JSON.stringify(example), () => {
-        const { value, timezone } = example.input;
-        const actual = dateObjectToUnixMilliseconds(value, timezone);
+        const { value, inputTimezone } = example.input;
+        const actual = dateObjectToUnixMilliseconds(value, inputTimezone);
         expect(actual).toEqual(example.expected);
       });
     }
@@ -66,7 +66,7 @@ describe('date-object', () => {
     interface Example {
       readonly input: {
         readonly value: DateObject;
-        readonly timezone: string | undefined;
+        readonly inputTimezone: string | undefined;
       };
       readonly expected: number;
     }
@@ -75,14 +75,14 @@ describe('date-object', () => {
       {
         input: {
           value: DATE_OBJECT,
-          timezone: undefined,
+          inputTimezone: undefined,
         },
         expected: 1_704_066_312,
       },
       {
         input: {
           value: DATE_OBJECT,
-          timezone: 'America/New_York',
+          inputTimezone: 'America/New_York',
         },
         expected: 1_704_084_312,
       },
@@ -90,8 +90,8 @@ describe('date-object', () => {
 
     for (const example of EXAMPLES) {
       it(JSON.stringify(example), () => {
-        const { value, timezone } = example.input;
-        const actual = dateObjectToUnixSeconds(value, timezone);
+        const { value, inputTimezone } = example.input;
+        const actual = dateObjectToUnixSeconds(value, inputTimezone);
         expect(actual).toEqual(example.expected);
       });
     }
@@ -101,7 +101,7 @@ describe('date-object', () => {
     interface Example {
       readonly input: {
         readonly value: DateObject;
-        readonly timezone: string | undefined;
+        readonly inputTimezone: string | undefined;
       };
       readonly expected: string;
     }
@@ -110,14 +110,14 @@ describe('date-object', () => {
       {
         input: {
           value: DATE_OBJECT,
-          timezone: undefined,
+          inputTimezone: undefined,
         },
         expected: '2023-12-31T23:45:12.614Z',
       },
       {
         input: {
           value: DATE_OBJECT,
-          timezone: 'America/New_York',
+          inputTimezone: 'America/New_York',
         },
         expected: '2024-01-01T04:45:12.614Z',
       },
@@ -125,8 +125,8 @@ describe('date-object', () => {
 
     for (const example of EXAMPLES) {
       it(JSON.stringify(example), () => {
-        const { value, timezone } = example.input;
-        const actual = dateObjectToJsDate(value, timezone).toISOString();
+        const { value, inputTimezone } = example.input;
+        const actual = dateObjectToJsDate(value, inputTimezone).toISOString();
         expect(actual).toEqual(example.expected);
       });
     }
@@ -136,7 +136,7 @@ describe('date-object', () => {
     interface Example {
       readonly input: {
         readonly value: DateObject;
-        readonly timezone: string | undefined;
+        readonly inputTimezone: string | undefined;
         readonly options: ToIsoDateTimeOptions | undefined;
       };
       readonly expected: string;
@@ -146,7 +146,7 @@ describe('date-object', () => {
       {
         input: {
           value: DATE_OBJECT,
-          timezone: undefined,
+          inputTimezone: undefined,
           options: undefined,
         },
         expected: '2023-12-31T23:45:12Z',
@@ -154,7 +154,7 @@ describe('date-object', () => {
       {
         input: {
           value: DATE_OBJECT,
-          timezone: undefined,
+          inputTimezone: undefined,
           options: {
             timeFormat: 'HH:mm:ss.SSS',
             offset: 'utc-zero-or-offset',
@@ -166,7 +166,7 @@ describe('date-object', () => {
       {
         input: {
           value: DATE_OBJECT,
-          timezone: 'America/New_York',
+          inputTimezone: 'America/New_York',
           options: {
             timeFormat: 'HH:mm:ss.SSS',
             offset: 'utc-zero-or-offset',
@@ -179,8 +179,8 @@ describe('date-object', () => {
 
     for (const example of EXAMPLES) {
       it(JSON.stringify(example), () => {
-        const { value, timezone, options } = example.input;
-        const actual = dateObjectToIsoDateTime(value, timezone, options);
+        const { value, inputTimezone, options } = example.input;
+        const actual = dateObjectToIsoDateTime(value, inputTimezone, options);
         expect(actual).toEqual(example.expected);
       });
     }
@@ -190,7 +190,7 @@ describe('date-object', () => {
     interface Example {
       readonly input: {
         readonly value: DateObject;
-        readonly timezone: string | undefined;
+        readonly inputTimezone: string | undefined;
         readonly options: ToIsoDateOptions | undefined;
       };
       readonly expected: string;
@@ -200,7 +200,7 @@ describe('date-object', () => {
       {
         input: {
           value: DATE_OBJECT,
-          timezone: undefined,
+          inputTimezone: undefined,
           options: undefined,
         },
         expected: '2023-12-31',
@@ -208,7 +208,7 @@ describe('date-object', () => {
       {
         input: {
           value: DATE_OBJECT,
-          timezone: undefined,
+          inputTimezone: undefined,
           options: {
             format: 'yyyy-MM',
             timezone: 'Asia/Tokyo',
@@ -219,7 +219,7 @@ describe('date-object', () => {
       {
         input: {
           value: DATE_OBJECT,
-          timezone: 'America/New_York',
+          inputTimezone: 'America/New_York',
           options: {
             format: 'yyyy-MM',
             timezone: 'Asia/Tokyo',
@@ -230,7 +230,7 @@ describe('date-object', () => {
       {
         input: {
           value: DATE_OBJECT,
-          timezone: 'Asia/Tokyo',
+          inputTimezone: 'Asia/Tokyo',
           options: {
             format: 'yyyy-MM',
             timezone: 'Asia/Tokyo',
@@ -242,8 +242,8 @@ describe('date-object', () => {
 
     for (const example of EXAMPLES) {
       it(JSON.stringify(example), () => {
-        const { value, timezone, options } = example.input;
-        const actual = dateObjectToIsoDate(value, timezone, options);
+        const { value, inputTimezone, options } = example.input;
+        const actual = dateObjectToIsoDate(value, inputTimezone, options);
         expect(actual).toEqual(example.expected);
       });
     }
@@ -253,7 +253,7 @@ describe('date-object', () => {
     interface Example {
       readonly input: {
         readonly value: DateObject;
-        readonly timezone: string | undefined;
+        readonly inputTimezone: string | undefined;
         readonly options: ToIsoTimeOptions | undefined;
       };
       readonly expected: string;
@@ -263,7 +263,7 @@ describe('date-object', () => {
       {
         input: {
           value: DATE_OBJECT,
-          timezone: undefined,
+          inputTimezone: undefined,
           options: undefined,
         },
         expected: '23:45:12',
@@ -271,7 +271,7 @@ describe('date-object', () => {
       {
         input: {
           value: DATE_OBJECT,
-          timezone: undefined,
+          inputTimezone: undefined,
           options: {
             format: 'HH:mm:ss.SSS',
             timezone: 'America/New_York',
@@ -282,7 +282,7 @@ describe('date-object', () => {
       {
         input: {
           value: DATE_OBJECT,
-          timezone: 'Europe/Berlin',
+          inputTimezone: 'Europe/Berlin',
           options: {
             format: 'HH:mm:ss.SSS',
             timezone: 'America/New_York',
@@ -294,8 +294,8 @@ describe('date-object', () => {
 
     for (const example of EXAMPLES) {
       it(JSON.stringify(example), () => {
-        const { value, timezone, options } = example.input;
-        const actual = dateObjectToIsoTime(value, timezone, options);
+        const { value, inputTimezone, options } = example.input;
+        const actual = dateObjectToIsoTime(value, inputTimezone, options);
         expect(actual).toEqual(example.expected);
       });
     }
@@ -305,6 +305,7 @@ describe('date-object', () => {
     interface Example {
       readonly input: {
         readonly value: DateObject;
+        readonly inputTimezone: string | undefined;
         readonly timezone: string | undefined;
       };
       readonly expected: DateObjectTz;
@@ -314,6 +315,7 @@ describe('date-object', () => {
       {
         input: {
           value: DATE_OBJECT,
+          inputTimezone: undefined,
           timezone: undefined,
         },
         expected: {
@@ -330,6 +332,24 @@ describe('date-object', () => {
       {
         input: {
           value: DATE_OBJECT,
+          inputTimezone: 'America/New_York',
+          timezone: undefined,
+        },
+        expected: {
+          year: 2024,
+          month: 1,
+          day: 1,
+          hour: 4,
+          minute: 45,
+          second: 12,
+          millisecond: 614,
+          timezone: 'UTC',
+        },
+      },
+      {
+        input: {
+          value: DATE_OBJECT,
+          inputTimezone: 'America/New_York',
           timezone: 'America/New_York',
         },
         expected: {
@@ -343,12 +363,29 @@ describe('date-object', () => {
           timezone: 'America/New_York',
         },
       },
+      {
+        input: {
+          value: DATE_OBJECT,
+          inputTimezone: 'Asia/Tokyo',
+          timezone: 'America/New_York',
+        },
+        expected: {
+          year: 2023,
+          month: 12,
+          day: 31,
+          hour: 9,
+          minute: 45,
+          second: 12,
+          millisecond: 614,
+          timezone: 'America/New_York',
+        },
+      },
     ];
 
     for (const example of EXAMPLES) {
       it(JSON.stringify(example), () => {
-        const { value, timezone } = example.input;
-        const actual = dateObjectToDateObjectTz(value, timezone);
+        const { value, inputTimezone, timezone } = example.input;
+        const actual = dateObjectToDateObjectTz(value, inputTimezone, timezone);
         expect(actual).toEqual(example.expected);
       });
     }

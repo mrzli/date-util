@@ -41,17 +41,14 @@ export function jsDateToIsoTime(
   return unixMillisecondsToIsoTime(unixMilliseconds, options);
 }
 
-export function jsDateToDateObject(
-  date: Date,
-  timezone: string = 'UTC',
-): DateObject {
+export function jsDateToDateObject(date: Date, timezone?: string): DateObject {
   const unixMilliseconds = jsDateToUnixMilliseconds(date);
   return unixMillisecondsToDateObject(unixMilliseconds, timezone);
 }
 
 export function jsDateToDateObjectTz(
   date: Date,
-  timezone: string = 'UTC',
+  timezone?: string,
 ): DateObjectTz {
   const unixMilliseconds = jsDateToUnixMilliseconds(date);
   return unixMillisecondsToDateObjectTz(unixMilliseconds, timezone);

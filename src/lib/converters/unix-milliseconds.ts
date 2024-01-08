@@ -11,29 +11,32 @@ import {
   toFinalIsoDateTimeOptions,
   toFinalIsoTimeOptions,
 } from './util';
+import { TIMEZONE_UTC } from '../util';
 
-export function unixMillisecondsToUnixSeconds(milliseconds: number): number {
-  return Math.floor(milliseconds / 1000);
+export function unixMillisecondsToUnixSeconds(
+  unixMilliseconds: number,
+): number {
+  return Math.floor(unixMilliseconds / 1000);
 }
 
-export function unixMillisecondsToJsDate(milliseconds: number): Date {
-  return new Date(milliseconds);
+export function unixMillisecondsToJsDate(unixMilliseconds: number): Date {
+  return new Date(unixMilliseconds);
 }
 
 export function unixMillisecondsToIsoDateTime(
-  milliseconds: number,
+  unixMilliseconds: number,
   options?: ToIsoDateTimeOptions,
 ): string {
   const finalOptions = toFinalIsoDateTimeOptions(options);
   const { timeFormat, timezone, offset } = finalOptions;
 
-  const date = DateTime.fromMillis(milliseconds, {
+  const date = DateTime.fromMillis(unixMilliseconds, {
     zone: timezone,
   });
 
   const shouldDisplayOffset =
     offset === 'offset' ||
-    (offset === 'utc-zero-or-offset' && timezone !== 'UTC');
+    (offset === 'utc-zero-or-offset' && timezone !== TIMEZONE_UTC);
 
   const offsetFormat = shouldDisplayOffset ? 'ZZ' : '';
 
@@ -41,20 +44,21 @@ export function unixMillisecondsToIsoDateTime(
     `yyyy-MM-dd'T'${timeFormat}${offsetFormat}`,
   );
 
-  const hasZSuffix = offset === 'utc-zero-or-offset' && timezone === 'UTC';
+  const hasZSuffix =
+    offset === 'utc-zero-or-offset' && timezone === TIMEZONE_UTC;
   const zSuffixIfAny = hasZSuffix ? 'Z' : '';
 
   return `${formattedDate}${zSuffixIfAny}`;
 }
 
 export function unixMillisecondsToIsoDate(
-  milliseconds: number,
+  unixMilliseconds: number,
   options?: ToIsoDateOptions,
 ): string {
   const finalOptions = toFinalIsoDateOptions(options);
   const { format, timezone } = finalOptions;
 
-  const date = DateTime.fromMillis(milliseconds, {
+  const date = DateTime.fromMillis(unixMilliseconds, {
     zone: timezone,
   });
 
@@ -64,13 +68,13 @@ export function unixMillisecondsToIsoDate(
 }
 
 export function unixMillisecondsToIsoTime(
-  milliseconds: number,
+  unixMilliseconds: number,
   options?: ToIsoTimeOptions,
 ): string {
   const finalOptions = toFinalIsoTimeOptions(options);
   const { format, timezone } = finalOptions;
 
-  const date = DateTime.fromMillis(milliseconds, {
+  const date = DateTime.fromMillis(unixMilliseconds, {
     zone: timezone,
   });
 
@@ -80,10 +84,23 @@ export function unixMillisecondsToIsoTime(
 }
 
 export function unixMillisecondsToDateObject(
-  milliseconds: number,
-  timezone: string = 'UTC',
+  unixMilliseconds: number,
+  timezone?: string,
 ): DateObject {
-  const date = DateTime.fromMillis(milliseconds, { zone: timezone });
+  const { timezone: _ignoreTimezone, ...rest } = unixMillisecondsToDateObjectTz(
+    unixMilliseconds,
+    timezone,
+  );
+  return rest;
+}
+
+export function unixMillisecondsToDateObjectTz(
+  unixMilliseconds: number,
+  timezone?: string,
+): DateObjectTz {
+  const finalTimezone = timezone ?? TIMEZONE_UTC;
+
+  const date = DateTime.fromMillis(unixMilliseconds, { zone: finalTimezone });
   const { year, month, day, hour, minute, second, millisecond } = date;
 
   return {
@@ -94,15 +111,6 @@ export function unixMillisecondsToDateObject(
     minute,
     second,
     millisecond,
-  };
-}
-
-export function unixMillisecondsToDateObjectTz(
-  milliseconds: number,
-  timezone: string = 'UTC',
-): DateObjectTz {
-  return {
-    ...unixMillisecondsToDateObject(milliseconds, timezone),
-    timezone,
+    timezone: finalTimezone,
   };
 }

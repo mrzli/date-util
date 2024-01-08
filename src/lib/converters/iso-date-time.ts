@@ -9,9 +9,12 @@ import {
   unixMillisecondsToJsDate,
   unixMillisecondsToUnixSeconds,
 } from './unix-milliseconds';
+import { TIMEZONE_UTC } from '../util';
 
 export function isoDateTimeToUnixMilliseconds(isoDateTime: string): number {
-  const result = DateTime.fromISO(isoDateTime, { zone: 'UTC' }).toMillis();
+  const result = DateTime.fromISO(isoDateTime, {
+    zone: TIMEZONE_UTC,
+  }).toMillis();
   if (Number.isNaN(result)) {
     // eslint-disable-next-line unicorn/prefer-type-error
     throw new Error(`Invalid ISO date-time format: '${isoDateTime}'.`);
@@ -56,7 +59,7 @@ export function isoDateTimeToIsoTime(
 
 export function isoDateTimeToDateObject(
   isoDateTime: string,
-  timezone: string = 'UTC',
+  timezone?: string,
 ): DateObject {
   const unixMilliseconds = isoDateTimeToUnixMilliseconds(isoDateTime);
   return unixMillisecondsToDateObject(unixMilliseconds, timezone);
@@ -64,7 +67,7 @@ export function isoDateTimeToDateObject(
 
 export function isoDateTimeToDateObjectTz(
   isoDateTime: string,
-  timezone: string = 'UTC',
+  timezone?: string,
 ): DateObjectTz {
   const unixMilliseconds = isoDateTimeToUnixMilliseconds(isoDateTime);
   return unixMillisecondsToDateObjectTz(unixMilliseconds, timezone);

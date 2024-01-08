@@ -208,13 +208,34 @@ describe('date-object-tz', () => {
 
   describe('dateObjectTzToDateObject()', () => {
     interface Example {
-      readonly input: DateObjectTz;
+      readonly input: {
+        readonly value: DateObjectTz;
+        readonly timezone: string | undefined;
+      };
       readonly expected: DateObject;
     }
 
     const EXAMPLES: readonly Example[] = [
       {
-        input: DATE_OBJECT,
+        input: {
+          value: DATE_OBJECT,
+          timezone: undefined,
+        },
+        expected: {
+          year: 2023,
+          month: 12,
+          day: 31,
+          hour: 22,
+          minute: 45,
+          second: 12,
+          millisecond: 614,
+        },
+      },
+      {
+        input: {
+          value: DATE_OBJECT,
+          timezone: 'Europe/Berlin',
+        },
         expected: {
           year: 2023,
           month: 12,
@@ -229,7 +250,8 @@ describe('date-object-tz', () => {
 
     for (const example of EXAMPLES) {
       it(JSON.stringify(example), () => {
-        const actual = dateObjectTzToDateObject(example.input);
+        const { value, timezone } = example.input;
+        const actual = dateObjectTzToDateObject(value, timezone);
         expect(actual).toEqual(example.expected);
       });
     }

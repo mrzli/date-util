@@ -47,7 +47,7 @@ describe('unix-seconds', () => {
     const EXAMPLES: readonly Example[] = [
       {
         input: 1_704_066_312,
-        expected: '2023-12-31T23:45:12Z',
+        expected: '2023-12-31T23:45:12.000Z',
       },
     ];
 

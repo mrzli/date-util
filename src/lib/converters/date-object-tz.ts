@@ -6,6 +6,7 @@ import {
   unixMillisecondsToIsoTime,
   unixMillisecondsToJsDate,
   unixMillisecondsToUnixSeconds,
+  unixMillisecondsToDateObject,
 } from './unix-milliseconds';
 
 export function dateObjectTzToUnixMilliseconds(
@@ -49,8 +50,10 @@ export function dateObjectTzToIsoTime(
   return unixMillisecondsToIsoTime(unixMilliseconds, options);
 }
 
-export function dateObjectTzToDateObject(dateObject: DateObjectTz): DateObject {
-  const { timezone: _ignoreTimezone, ...rest } = dateObject;
-
-  return rest;
+export function dateObjectTzToDateObject(
+  dateObject: DateObjectTz,
+  timezone?: string,
+): DateObject {
+  const unixMilliseconds = dateObjectTzToUnixMilliseconds(dateObject);
+  return unixMillisecondsToDateObject(unixMilliseconds, timezone);
 }

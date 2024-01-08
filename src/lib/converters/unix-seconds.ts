@@ -43,7 +43,7 @@ export function unixSecondsToIsoTime(
 
 export function unixSecondsToDateObject(
   unixSeconds: number,
-  timezone: string = 'UTC',
+  timezone?: string,
 ): DateObject {
   const unixMilliseconds = unixSecondsToUnixMilliseconds(unixSeconds);
   return unixMillisecondsToDateObject(unixMilliseconds, timezone);
@@ -51,7 +51,7 @@ export function unixSecondsToDateObject(
 
 export function unixSecondsToDateObjectTz(
   unixSeconds: number,
-  timezone: string = 'UTC',
+  timezone?: string,
 ): DateObjectTz {
   const unixMilliseconds = unixSecondsToUnixMilliseconds(unixSeconds);
   return unixMillisecondsToDateObjectTz(unixMilliseconds, timezone);
