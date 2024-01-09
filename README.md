@@ -75,6 +75,23 @@ const input: DateObject = {
 };
 ```
 
+###### DateObjectTz Input Date
+
+All `dateObjectTzTo*` examples will assume the following input [DateObjectTz](#dateobjecttz):
+
+```ts
+const input: DateObjectTz = {
+  year: 2023,
+  month: 12,
+  day: 31,
+  hour: 23,
+  minute: 45,
+  second: 12,
+  millisecond: 614,
+  timezone: 'America/New_York',
+};
+```
+
 ###### ISO DateTime Input Date
 
 For ISO datetime string inputs (`isoDateTimeTo*` functions), a valid ISO datetime string is expected, otherwise an error will be throws.
@@ -465,20 +482,12 @@ console.log(output6);
 
 #### `dateObjectToDateObjectTz`
 
-Converts from a [DateObject](#dateobject) to ISO time string.
+Converts from a [DateObject](#dateobject) to [DateObjectTz](#dateobjecttz).
 
 Check [parameters](#parameters) section for more information.
 
 ```ts
-const input: DateObject = {
-  year: 2023,
-  month: 12,
-  day: 31,
-  hour: 23,
-  minute: 45,
-  second: 12,
-  millisecond: 614,
-};
+const input: DateObject = { ... };
 
 const output1 = dateObjectToDateObjectTz(input);
 console.log(output1);
@@ -533,23 +542,14 @@ console.log(output4);
 // }
 ```
 
-#### `dateObjectToTzUnixMilliseconds`
+#### `dateObjectTzToUnixMilliseconds`
 
 Converts from a [DateObjectTz](#dateobjecttz) to Unix milliseconds timestamp.
 
-It is almost exactly the same function as [dateObjectToUnixMilliseconds](#dateobjecttounixmilliseconds), but `timezone` is a part of the [DateObjectTz](#dateobjecttz), so it is not necessary to pass it as a separate parameter.
+Check [parameters](#parameters) section for more information.
 
 ```ts
-const input: DateObjectTz = {
-  year: 2023,
-  month: 12,
-  day: 31,
-  hour: 23,
-  minute: 45,
-  second: 12,
-  millisecond: 614,
-  timezone: 'America/New_York',
-};
+const input: DateObjectTz = { ... };
 
 const output = dateObjectTzToUnixMilliseconds(input);
 console.log(output);
@@ -558,21 +558,12 @@ console.log(output);
 
 #### `dateObjectTzToUnixSeconds`
 
-Converts from a [DateObjectTz](#dateobjecttz) to Unix seconds timestamp.
+Converts from a [DateObjectTz](#dateobjecttz) to Unix seconds timestamp. Milliseconds are truncated, i.e. seconds are not rounded.
 
-It is almost exactly the same function as [dateObjectToUnixSeconds](#dateobjecttounixseconds), but `timezone` is a part of the [DateObjectTz](#dateobjecttz), so it is not necessary to pass it as a separate parameter.
+Check [parameters](#parameters) section for more information.
 
 ```ts
-const input: DateObjectTz = {
-  year: 2023,
-  month: 12,
-  day: 31,
-  hour: 23,
-  minute: 45,
-  second: 12,
-  millisecond: 614,
-  timezone: 'America/New_York',
-};
+const input: DateObjectTz = { ... };
 
 const output = dateObjectTzToUnixSeconds(input);
 console.log(output);
@@ -583,44 +574,24 @@ console.log(output);
 
 Converts from a [DateObjectTz](#dateobjecttz) to native JavaScript `Date` object.
 
-It is almost exactly the same function as [dateObjectToJsDate](#dateobjecttojsdate), but `timezone` is a part of the [DateObjectTz](#dateobjecttz), so it is not necessary to pass it as a separate parameter.
+Check [parameters](#parameters) section for more information.
 
 ```ts
-const input: DateObjectTz = {
-  year: 2023,
-  month: 12,
-  day: 31,
-  hour: 23,
-  minute: 45,
-  second: 12,
-  millisecond: 614,
-  timezone: 'America/New_York',
-};
+const input: DateObjectTz = { ... };
 
 const output = dateObjectTzToJsDate(input);
 console.log(output);
-// 2024-01-01T04:45:12Z
+// 2024-01-01T04:45:12.614Z
 ```
 
 #### `dateObjectTzToIsoDateTime`
 
 Converts from a [DateObjectTz](#dateobjecttz) to ISO datetime string.
 
-It is almost exactly the same function as [dateObjectToIsoDateTime](#dateobjecttoisodatetime), but `timezone` is a part of the [DateObjectTz](#dateobjecttz), so it is not necessary to pass it as a separate parameter.
-
-Examples:
+Check [parameters](#parameters) section for more information.
 
 ```ts
-const input: DateObjectTz = {
-  year: 2023,
-  month: 12,
-  day: 31,
-  hour: 23,
-  minute: 45,
-  second: 12,
-  millisecond: 614,
-  timezone: 'America/New_York',
-};
+const input: DateObjectTz = { ... };
 
 const output1 = dateObjectTzToIsoDateTime(input);
 console.log(output1);
@@ -633,27 +604,14 @@ console.log(output2);
 // 2023-12-31T23:45:12-05:00
 ```
 
-See [dateObjectToIsoDateTime](#dateobjecttoisodatetime) for more examples of `options`.
-
 #### `dateObjectTzToIsoDate`
 
-Converts from a [DateObjectTz](#dateobjecttz) to the date part of the ISO string.
+Converts from a [DateObjectTz](#dateobjecttz) to ISO date string.
 
-It is almost exactly the same function as [dateObjectToIsoDate](#dateobjecttoisodate), but `timezone` is a part of the [DateObjectTz](#dateobjecttz), so it is not necessary to pass it as a separate parameter.
-
-Examples:
+Check [parameters](#parameters) section for more information.
 
 ```ts
-const input: DateObjectTz = {
-  year: 2023,
-  month: 12,
-  day: 31,
-  hour: 23,
-  minute: 45,
-  second: 12,
-  millisecond: 614,
-  timezone: 'America/New_York',
-};
+const input: DateObjectTz = { ... };
 
 const output1 = dateObjectTzToIsoDate(input);
 console.log(output1);
@@ -666,57 +624,49 @@ console.log(output2);
 // 2023-12-31
 ```
 
-See [dateObjectToIsoDate](#dateobjecttoisodate) for more examples of `options`.
+#### `dateObjectTzToIsoTime`
 
-Converts from a [DateObjectTz](#dateobjecttz) to the time part of the ISO string.
+Converts from a [DateObjectTz](#dateobjecttz) to ISO time string.
 
-It is almost exactly the same function as [dateObjectToIsoTime](#dateobjecttoisotime), but `timezone` is a part of the [DateObjectTz](#dateobjecttz), so it is not necessary to pass it as a separate parameter.
-
-Examples:
+Check [parameters](#parameters) section for more information.
 
 ```ts
-const input: DateObjectTz = {
-  year: 2023,
-  month: 12,
-  day: 31,
-  hour: 23,
-  minute: 45,
-  second: 12,
-  millisecond: 614,
-  timezone: 'America/New_York',
-};
+const input: DateObjectTz = { ... };
 
-const output1 = dateObjectToIsoTzTime(input);
+const output1 = dateObjectTzToIsoTime(input);
 console.log(output1);
 // 04:45:12
 
-const output2 = dateObjectToIsoTzTime(input, {
+const output2 = dateObjectTzToIsoTime(input, {
   timezone: 'America/New_York',
 });
 console.log(output2);
 // 23:45:12
 ```
 
-See [dateObjectToIsoTime](#dateobjecttoisotime) for more examples of `options`.
-
 #### `dateObjectTzToDateObject`
 
-Converts a [DateObjectTz](#dateobjecttz) object to [DateObject](#dateobject). It simply removes the `timezone` field from the input object, and keeps the values of all other fields intact.
+Converts from a [DateObjectTz](#dateobjecttz) to [DateObject](#dateobject).
+
+Check [parameters](#parameters) section for more information.
 
 ```ts
-const input: DateObjectTz = {
-  year: 2023,
-  month: 12,
-  day: 31,
-  hour: 23,
-  minute: 45,
-  second: 12,
-  millisecond: 614,
-  timezone: 'America/New_York',
-};
+const input: DateObjectTz = { ... };
 
-const output = dateObjectTzToDateObject(input);
-console.log(output);
+const output1 = dateObjectTzToDateObject(input);
+console.log(output1);
+// {
+//   year: 2024,
+//   month: 1,
+//   day: 1,
+//   hour: 4,
+//   minute: 45,
+//   second: 12,
+//   millisecond: 614,
+// }
+
+const output2 = dateObjectTzToDateObject(input, 'America/New_York');
+console.log(output2);
 // {
 //   year: 2023,
 //   month: 12,
