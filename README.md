@@ -801,6 +801,124 @@ console.log(output);
 // }
 ```
 
+#### `jsDateToUnixMilliseconds`
+
+Converts native JavaScript `Date` object to Unix milliseconds timestamp.
+
+Check [converter parameters](#converter-parameters) section for more information.
+
+```ts
+const input = new Date('2023-12-31T23:45:12.614Z');
+const output = jsDateToUnixMilliseconds(input);
+console.log(output);
+// 1_704_066_312_614
+```
+
+#### `jsDateToUnixSeconds`
+
+Converts native JavaScript `Date` object to Unix seconds timestamp. Milliseconds are truncated, i.e. seconds are not rounded.
+
+Check [converter parameters](#converter-parameters) section for more information.
+
+```ts
+const input = new Date('2023-12-31T23:45:12.614Z');
+const output = jsDateToUnixSeconds(input);
+console.log(output);
+// 1_704_066_312
+```
+
+#### `jsDateToIsoDateTime`
+
+Converts native JavaScript `Date` object to ISO datetime string.
+
+Check [converter parameters](#converter-parameters) section for more information.
+
+```ts
+const input = new Date('2023-12-31T23:45:12.614Z');
+const output = jsDateToIsoDateTime(input, {
+  timeFormat: 'HH:mm:ss',
+  timezone: 'America/New_York',
+  offset: 'offset',
+});
+console.log(output);
+// 2023-12-31T18:45:12-05:00
+```
+
+#### `jsDateToIsoDate`
+
+Converts native JavaScript `Date` object to ISO date string.
+
+Check [converter parameters](#converter-parameters) section for more information.
+
+```ts
+const input = new Date('2023-12-31T23:45:12.614Z');
+const output = jsDateToIsoDate(input, {
+  format: 'yyyy-MM-dd',
+  timezone: 'Asia/Tokyo',
+});
+console.log(output);
+// 2024-01-01
+```
+
+#### `jsDateToIsoTime`
+
+Converts native JavaScript `Date` object to ISO time string.
+
+Check [converter parameters](#converter-parameters) section for more information.
+
+```ts
+const input = new Date('2023-12-31T23:45:12.614Z');
+const output = jsDateToIsoTime(input, {
+  format: 'HH:mm:ss',
+  timezone: 'America/New_York',
+});
+console.log(output);
+// 18:45:12
+```
+
+#### `jsDateToDateObject`
+
+Converts native JavaScript `Date` object to [DateObject](#dateobject).
+
+Check [converter parameters](#converter-parameters) section for more information.
+
+```ts
+const input = new Date('2023-12-31T23:45:12.614Z');
+const output = jsDateToDateObject(input, 'America/New_York');
+console.log(output);
+// {
+//   year: 2023,
+//   month: 12,
+//   day: 31,
+//   hour: 18,
+//   minute: 45,
+//   second: 12,
+//   millisecond: 614,
+// }
+```
+
+#### `jsDateToDateObjectTz`
+
+Converts native JavaScript `Date` object to [DateObjectTz](#dateobjecttz).
+
+Check [converter parameters](#converter-parameters) section for more information.
+
+```ts
+const input = new Date('2023-12-31T23:45:12.614Z');
+const output = jsDateToDateObjectTz(input, 'America/New_York');
+console.log(output);
+// {
+//   year: 2023,
+//   month: 12,
+//   day: 31,
+//   hour: 18,
+//   minute: 45,
+//   second: 12,
+//   millisecond: 614,
+//   timezone: 'America/New_York',
+// }
+```
+
 #### `unixMillisecondsToUnixSeconds`
 
 Converts Unix milliseconds timestamp to Unix seconds timestamp. Milliseconds are truncated, i.e. seconds are not rounded.
