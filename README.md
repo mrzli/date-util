@@ -1141,6 +1141,268 @@ console.log(output);
 // }
 ```
 
+### Change Date General Information
+
+Here is some general information about function that are used for adding or subtracting a duration from a date ([Change Date](#change-date)).
+
+There is one function for adding/subtracting a duration for each of the six full date forms.
+
+To subtract a duration, simply pass a negative number as the duration field value.
+
+These functions should currently work with fractional values in duration fields, but they are meant to be used with integer values.
+
+#### Change Date Parameters
+
+##### Input Date
+
+All function used for adding (or subtracting) a duration from a date take an input date as the first parameter.
+
+##### Input Timezone
+
+`inputTimezone` is a necessary parameter before we are able to do datetime arithmetic with certain date forms.
+
+If `undefined` is passed to it, the `inputTimezone` will default to `UTC`.
+
+###### Day Arithmetic (and Larger Time Components)
+
+Because of the Daylight Saving Time (DST), datetime arithmetic is dependent on both the current point in time and the timezone. For example, adding 1 day to a datetime will not necessarily add 24 hours to it.
+
+For example:
+
+- Clocks of most European countries were turned back by 1 hours at `2023-10-29T01:00:00Z`.
+- In that instant, `Europe/Berlin` timezone went:
+  - From `2023-10-29T03:00:00+02:00`.
+  - To `2023-10-29T02:00:00+01:00`.
+- In other words, the local time went from `03:00` to `02:00`.
+
+Let's say:
+
+- We have an input datetime of `2023-10-29T00:00:00` local time in `Europe/Berlin`.
+- We want to add 1 day to it.
+- We expect the result to be `2023-10-30T00:00:00` local time in `Europe/Berlin`.
+
+The first datetime is `2023-10-29T00:00:00+02:00`, or `2023-10-28T22:00:00Z`. The second datetime is `2023-10-30T00:00:00+01:00`, or `2023-10-29T23:00:00Z`. The difference is 25 hours.
+
+###### Hour Arithmetic (and Smaller Time Components)
+
+Hours and smaller time components are not affected by Daylight Saving Time - when looking at it from the perspective of 'absolute time', like the one represented by Unix timestamps.
+
+Adding an hour will always add `3_600_000` milliseconds to a timestamp, regardless of the current point in time and the timezone. Adding 25 hours will always add `25 * 3_600_000` milliseconds.
+
+Adding 25 hours to `2023-10-29:00:00:00` in `Europe/Berlin` timezone will result in `2023-10-30T00:00:00` in `Europe/Berlin` timezone - exactly the same result as adding 1 day would produce in that situation. The difference between Unix milliseconds timestamps of these two datetimes is - as should now be clear - `25 * 3_600_000`.
+
+###### Which Date Forms Need a Timezone?
+
+All date forms except [DateObject](#dateobject) and [DateObjectTz](#dateobjecttz) need to be provided with an `inputTimezone` parameter to be able to do date arithmetic.
+
+`UnixMilliseconds` and `UnixSeconds` obviously have no concept of timezone, so they need to be provided with an `inputTimezone` parameter to generate results consistent with the change functions for other date forms. You can always use `UTC` as the `inputTimezone` parameter if you need results unaffected by DST.
+
+`JsDate` is essentially just a wrapper around Unix milliseconds, so same rules apply.
+
+`IsoDateTime` can have an offset, but does not have to, and anyway the offset is ambiguous. Does `+01:00` mean `Europe/Berlin` or maybe some timezone which does not use DST? Again, and explicit `inputTimezone` parameter needs to be provided to resolve any ambiguity.
+
+[DateObject](#dateobject) is intended to represent an abstract date and time, not tied to a particular timezone, and not tied to a particular point in time. Date arithmetic should therefore be unaffected by DST, and no `inputTimezone` parameter is needed. Internally, it uses `UTC` to accomplish this.
+
+[DateObjectTz](#dateobjecttz) represents a concrete point in time, like `UnixMilliseconds` etc., but it also has a timezone contained within its structure. Therefore, it has all the information it needs to do date arithmetic, and no `inputTimezone` parameter is needed.
+
+##### Change Amount
+
+The `amount` parameter is a [Duration](#duration) object, which contains the amount of time to add/subtract to the input date.
+
+Each duraction component (like `years` or `weeks`) can be a positive or negative number, and can be a fractional number. Positive number means that the duration will be added to the input date, negative number means that the duration will be subtracted from the input date. `amount` will work with fractional field values, but is meant to be used with integer values.
+
+This is the third parameter if the function has an `inputTimezone` parameter, second parameter otherwise.
+
+##### Output Options
+
+Only `isoDateTimeChange` change has output `options` parameter. It works exactly the same way as in `isoDateTo*` converter functions and has the same defaults. In short, it controls the output ISO format.
+
+## Change Date
+
+Here are functions that can be used to add or subtract a duration from a date.
+
+#### `dateObjectChange`
+
+Changes a [DateObject](#dateobject) by adding/subtracting a [duration](#duration).
+
+Check [change date parameters](#change-date-parameters) section for more information.
+
+```ts
+const input: DateObject = {
+  year: 2023,
+  month: 12,
+  day: 31,
+  hour: 23,
+  minute: 45,
+  second: 12,
+  millisecond: 614,
+};
+const output = dateObjectChange(input, { days: 1 });
+console.log(output);
+// {
+//   year: 2024,
+//   month: 1,
+//   day: 1,
+//   hour: 23,
+//   minute: 45,
+//   second: 12,
+//   millisecond: 614,
+// }
+```
+
+#### `dateObjectTzChange`
+
+Changes a [DateObjectTz](#dateobjecttz) by adding/subtracting a [duration](#duration).
+
+Check [change date parameters](#change-date-parameters) section for more information.
+
+```ts
+const input: DateObjectTz = {
+  year: 2023,
+  month: 12,
+  day: 31,
+  hour: 23,
+  minute: 45,
+  second: 12,
+  millisecond: 614,
+  timezone: 'America/New_York',
+};
+const output = dateObjectTzChange(input, { days: 1 });
+console.log(output);
+// {
+//   year: 2024,
+//   month: 1,
+//   day: 1,
+//   hour: 23,
+//   minute: 45,
+//   second: 12,
+//   millisecond: 614,
+//   timezone: 'America/New_York',
+// }
+```
+
+#### `isoDateTimeChange`
+
+Changes an ISO datetime by adding/subtracting a [duration](#duration).
+
+Check [change date parameters](#change-date-parameters) section for more information.
+
+```ts
+const output1 = isoDateTimeChange(
+  '2023-10-28T23:45:12Z',
+  'UTC',
+  { days: 1 }
+);
+console.log(output1);
+// 2023-10-29T23:45:12Z
+
+const output2 = isoDateTimeChange(
+  '2023-10-28T23:45:12Z',
+  'Europe/Berlin',
+  { days: 1 }
+);
+console.log(output2);
+// 2023-10-30T00:45:12Z
+// (since change was made in Europe/Berlin timezone
+//   during the DST transition, the difference is 25 hours)
+// (output format still uses 'Z' suffix, which is dictated
+//   by the options parameter, or the defaults in this case,
+//   since the options parameter is not provided)
+
+const output3 = isoDateTimeChange(
+  // providing '2023-10-28T23:45:12.614Z' as the input,
+  //   which is the same point in time,
+  //   would produce the same result
+  '2023-10-29T01:45:12.614+02:00', 
+  // defines the timezone of the conversion
+  //   (takes into account the DST transition)
+  'Europe/Berlin',
+  // change amount
+  { days: 1 },
+  // output format
+  {
+    timeFormat: 'HH:mm:ss.SSS',
+    timezone: 'Europe/Berlin'
+  }
+);
+console.log(output3);
+// 2023-10-30T01:45:12.614+01:00
+// (same local time as input, one day later)
+```
+
+#### `jsDateChange`
+
+Changes a native JavaScript `Date` object by adding/subtracting a [duration](#duration).
+
+Check [change date parameters](#change-date-parameters) section for more information.
+
+```ts
+const input = new Date('2023-12-31T23:45:12.614Z');
+const output = jsDateChange(input, 'UTC', { days: 1 });
+console.log(output);
+// 2024-01-01T23:45:12.614Z
+```
+
+#### `unixMillisecondsChange`
+
+Changes a Unix milliseconds timestamp by adding/subtracting a [duration](#duration).
+
+Check [change date parameters](#change-date-parameters) section for more information.
+
+```ts
+const output = unixMillisecondsChange(
+  1_704_066_312_614,
+  'UTC',
+  { days: 1 }
+);
+console.log(output);
+// 1_704_152_712_614
+```
+
+#### `unixSecondsChange`
+
+Changes a Unix seconds timestamp by adding/subtracting a [duration](#duration).
+
+Any milliseconds in the resulting timestamp are truncated, i.e. seconds are not rounded.
+
+Note that, however, only the result is truncated. You can still pass `milliseconds` in the `amount`, and if the value is less than `0` or equal to or greater than `1000`, it will affect the result.
+
+Check [change date parameters](#change-date-parameters) section for more information.
+
+```ts
+const output1 = unixSecondsChange(
+  1_704_066_312,
+  'UTC',
+  { days: 1 }
+);
+console.log(output1);
+// 1_704_152_712
+
+const output2 = unixSecondsChange(
+  1_704_066_312,
+  'UTC',
+  { milliseconds: 614 }
+);
+console.log(output2);
+// 1_704_066_312
+
+const output3 = unixSecondsChange(
+  1_704_066_312,
+  'UTC',
+  { milliseconds: 1614 }
+);
+console.log(output3);
+// 1_704_066_313
+
+const output4 = unixSecondsChange(
+  1_704_066_312,
+  'UTC',
+  { milliseconds: -1 }
+);
+console.log(output4);
+// 1_704_066_311
+```
+
 ## Types
 
 ### `ToIsoDateTimeOptions`
@@ -1262,5 +1524,24 @@ interface DateObjectTz {
   readonly second: number;
   readonly millisecond: number;
   readonly timezone: string;
+}
+```
+
+#### `Duration`
+
+Object containing duration field, from `years` down to `milliseconds`.
+
+It is used for adding or subtracting a duration from a date.
+
+```ts
+interface Duration {
+  readonly years?: number;
+  readonly months?: number;
+  readonly weeks?: number;
+  readonly days?: number;
+  readonly hours?: number;
+  readonly minutes?: number;
+  readonly seconds?: number;
+  readonly milliseconds?: number;
 }
 ```
