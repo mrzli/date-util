@@ -12,9 +12,9 @@ import {
   jsDateChangeTime,
   unixMillisecondsChangeTime,
   unixSecondsChangeTime,
-} from './change-time';
+} from './change-date';
 
-describe('change-time', () => {
+describe('change-date', () => {
   describe('unixMillisecondsChangeTime()', () => {
     interface Example {
       readonly input: {
