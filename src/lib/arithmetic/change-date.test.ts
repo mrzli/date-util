@@ -204,6 +204,14 @@ describe('change-date', () => {
         },
         expected: 1_698_536_713, // 2023-10-28T23:45:13Z
       },
+      {
+        input: {
+          value: 1_698_536_712, // 2023-10-28T23:45:12Z
+          inputTimezone: undefined,
+          amount: { milliseconds: -1 },
+        },
+        expected: 1_698_536_711, // 2023-10-28T23:45:11Z
+      },
     ];
 
     for (const example of EXAMPLES) {
