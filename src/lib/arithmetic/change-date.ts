@@ -19,7 +19,7 @@ import {
   unixSecondsToUnixMilliseconds,
 } from '../converters';
 
-export function unixMillisecondsChangeTime(
+export function unixMillisecondsChange(
   unixMilliseconds: number,
   inputTimezone: string | undefined,
   amount: Duration,
@@ -31,13 +31,13 @@ export function unixMillisecondsChangeTime(
     .toMillis();
 }
 
-export function unixSecondsChangeTime(
+export function unixSecondsChange(
   unixSeconds: number,
   inputTimezone: string | undefined,
   amount: Duration,
 ): number {
   const unixMilliseconds = unixSecondsToUnixMilliseconds(unixSeconds);
-  const newUnixMilliseconds = unixMillisecondsChangeTime(
+  const newUnixMilliseconds = unixMillisecondsChange(
     unixMilliseconds,
     inputTimezone,
     amount,
@@ -45,13 +45,13 @@ export function unixSecondsChangeTime(
   return unixMillisecondsToUnixSeconds(newUnixMilliseconds);
 }
 
-export function jsDateChangeTime(
+export function jsDateChange(
   date: Date,
   inputTimezone: string | undefined,
   amount: Duration,
 ): Date {
   const unixMilliseconds = jsDateToUnixMilliseconds(date);
-  const newUnixMilliseconds = unixMillisecondsChangeTime(
+  const newUnixMilliseconds = unixMillisecondsChange(
     unixMilliseconds,
     inputTimezone,
     amount,
@@ -59,14 +59,14 @@ export function jsDateChangeTime(
   return unixMillisecondsToJsDate(newUnixMilliseconds);
 }
 
-export function isoDateTimeChangeTime(
+export function isoDateTimeChange(
   isoDateTime: string,
   inputTimezone: string | undefined,
   amount: Duration,
   options?: ToIsoDateTimeOptions,
 ): string {
   const unixMilliseconds = isoDateTimeToUnixMilliseconds(isoDateTime);
-  const newUnixMilliseconds = unixMillisecondsChangeTime(
+  const newUnixMilliseconds = unixMillisecondsChange(
     unixMilliseconds,
     inputTimezone,
     amount,
@@ -74,7 +74,7 @@ export function isoDateTimeChangeTime(
   return unixMillisecondsToIsoDateTime(newUnixMilliseconds, options);
 }
 
-export function dateObjectChangeTime(
+export function dateObjectChange(
   dateObject: DateObject,
   amount: Duration,
 ): DateObject {
@@ -82,7 +82,7 @@ export function dateObjectChangeTime(
     dateObject,
     TIMEZONE_UTC,
   );
-  const newUnixMilliseconds = unixMillisecondsChangeTime(
+  const newUnixMilliseconds = unixMillisecondsChange(
     unixMilliseconds,
     TIMEZONE_UTC,
     amount,
@@ -90,14 +90,14 @@ export function dateObjectChangeTime(
   return unixMillisecondsToDateObject(newUnixMilliseconds, TIMEZONE_UTC);
 }
 
-export function dateObjectTzChangeTime(
+export function dateObjectTzChange(
   dateObject: DateObjectTz,
   amount: Duration,
 ): DateObject {
   const { timezone } = dateObject;
 
   const unixMilliseconds = dateObjectTzToUnixMilliseconds(dateObject);
-  const newUnixMilliseconds = unixMillisecondsChangeTime(
+  const newUnixMilliseconds = unixMillisecondsChange(
     unixMilliseconds,
     timezone,
     amount,
