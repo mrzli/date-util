@@ -1288,19 +1288,11 @@ Changes an ISO datetime by adding/subtracting a [duration](#duration).
 Check [change date parameters](#change-date-parameters) section for more information.
 
 ```ts
-const output1 = isoDateTimeChange(
-  '2023-10-28T23:45:12Z',
-  'UTC',
-  { days: 1 }
-);
+const output1 = isoDateTimeChange('2023-10-28T23:45:12Z', 'UTC', { days: 1 });
 console.log(output1);
 // 2023-10-29T23:45:12Z
 
-const output2 = isoDateTimeChange(
-  '2023-10-28T23:45:12Z',
-  'Europe/Berlin',
-  { days: 1 }
-);
+const output2 = isoDateTimeChange('2023-10-28T23:45:12Z', 'Europe/Berlin', { days: 1 });
 console.log(output2);
 // 2023-10-30T00:45:12Z
 // (since change was made in Europe/Berlin timezone
@@ -1313,7 +1305,7 @@ const output3 = isoDateTimeChange(
   // providing '2023-10-28T23:45:12.614Z' as the input,
   //   which is the same point in time,
   //   would produce the same result
-  '2023-10-29T01:45:12.614+02:00', 
+  '2023-10-29T01:45:12.614+02:00',
   // defines the timezone of the conversion
   //   (takes into account the DST transition)
   'Europe/Berlin',
@@ -1322,8 +1314,8 @@ const output3 = isoDateTimeChange(
   // output format
   {
     timeFormat: 'HH:mm:ss.SSS',
-    timezone: 'Europe/Berlin'
-  }
+    timezone: 'Europe/Berlin',
+  },
 );
 console.log(output3);
 // 2023-10-30T01:45:12.614+01:00
@@ -1350,11 +1342,7 @@ Changes a Unix milliseconds timestamp by adding/subtracting a [duration](#durati
 Check [change date parameters](#change-date-parameters) section for more information.
 
 ```ts
-const output = unixMillisecondsChange(
-  1_704_066_312_614,
-  'UTC',
-  { days: 1 }
-);
+const output = unixMillisecondsChange(1_704_066_312_614, 'UTC', { days: 1 });
 console.log(output);
 // 1_704_152_712_614
 ```
@@ -1370,35 +1358,19 @@ Note that, however, only the result is truncated. You can still pass `millisecon
 Check [change date parameters](#change-date-parameters) section for more information.
 
 ```ts
-const output1 = unixSecondsChange(
-  1_704_066_312,
-  'UTC',
-  { days: 1 }
-);
+const output1 = unixSecondsChange(1_704_066_312, 'UTC', { days: 1 });
 console.log(output1);
 // 1_704_152_712
 
-const output2 = unixSecondsChange(
-  1_704_066_312,
-  'UTC',
-  { milliseconds: 614 }
-);
+const output2 = unixSecondsChange(1_704_066_312, 'UTC', { milliseconds: 614 });
 console.log(output2);
 // 1_704_066_312
 
-const output3 = unixSecondsChange(
-  1_704_066_312,
-  'UTC',
-  { milliseconds: 1614 }
-);
+const output3 = unixSecondsChange(1_704_066_312, 'UTC', { milliseconds: 1614 });
 console.log(output3);
 // 1_704_066_313
 
-const output4 = unixSecondsChange(
-  1_704_066_312,
-  'UTC',
-  { milliseconds: -1 }
-);
+const output4 = unixSecondsChange(1_704_066_312, 'UTC', { milliseconds: -1 });
 console.log(output4);
 // 1_704_066_311
 ```
