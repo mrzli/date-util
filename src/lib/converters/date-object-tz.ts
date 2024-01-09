@@ -1,5 +1,11 @@
 import { DateTime } from 'luxon';
-import { ToIsoDateTimeOptions, DateObject, DateObjectTz } from '../types';
+import {
+  ToIsoDateTimeOptions,
+  DateObject,
+  DateObjectTz,
+  ToIsoDateOptions,
+  ToIsoTimeOptions,
+} from '../types';
 import {
   unixMillisecondsToIsoDateTime,
   unixMillisecondsToIsoDate,
@@ -36,7 +42,7 @@ export function dateObjectTzToIsoDateTime(
 
 export function dateObjectTzToIsoDate(
   dateObject: DateObjectTz,
-  options?: ToIsoDateTimeOptions,
+  options?: ToIsoDateOptions,
 ): string {
   const unixMilliseconds = dateObjectTzToUnixMilliseconds(dateObject);
   return unixMillisecondsToIsoDate(unixMilliseconds, options);
@@ -44,7 +50,7 @@ export function dateObjectTzToIsoDate(
 
 export function dateObjectTzToIsoTime(
   dateObject: DateObjectTz,
-  options?: ToIsoDateTimeOptions,
+  options?: ToIsoTimeOptions,
 ): string {
   const unixMilliseconds = dateObjectTzToUnixMilliseconds(dateObject);
   return unixMillisecondsToIsoTime(unixMilliseconds, options);

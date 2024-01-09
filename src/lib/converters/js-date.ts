@@ -1,4 +1,10 @@
-import { ToIsoDateTimeOptions, DateObject, DateObjectTz } from '../types';
+import {
+  ToIsoDateTimeOptions,
+  DateObject,
+  DateObjectTz,
+  ToIsoDateOptions,
+  ToIsoTimeOptions,
+} from '../types';
 import {
   unixMillisecondsToIsoDateTime,
   unixMillisecondsToIsoDate,
@@ -27,7 +33,7 @@ export function jsDateToIsoDateTime(
 
 export function jsDateToIsoDate(
   date: Date,
-  options?: ToIsoDateTimeOptions,
+  options?: ToIsoDateOptions,
 ): string {
   const unixMilliseconds = jsDateToUnixMilliseconds(date);
   return unixMillisecondsToIsoDate(unixMilliseconds, options);
@@ -35,7 +41,7 @@ export function jsDateToIsoDate(
 
 export function jsDateToIsoTime(
   date: Date,
-  options?: ToIsoDateTimeOptions,
+  options?: ToIsoTimeOptions,
 ): string {
   const unixMilliseconds = jsDateToUnixMilliseconds(date);
   return unixMillisecondsToIsoTime(unixMilliseconds, options);
