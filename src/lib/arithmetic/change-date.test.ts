@@ -122,13 +122,23 @@ describe('change-date', () => {
         },
         expected: 1_698_623_112_614, // 2023-10-29T23:45:12.614Z
       },
-      // this one is affected by daylight saving time
+      // this one is affected by Daylight Saving Time
       // adding 1 day adds 25 hours instead of 24
       {
         input: {
           value: 1_698_536_712_614, // 2023-10-28T23:45:12.614Z (2023-10-29T01:45:12.614+02:00)
           inputTimezone: 'Europe/Berlin',
           amount: { days: 1 },
+        },
+        expected: 1_698_626_712_614, // 2023-10-30T00:45:12.614Z (2023-10-30T01:45:12.614+01:00)
+      },
+      // adding hours is not affected by Daylight Saving Time
+      // it will always add <number-of-hours> * 60 * 60 * 1000 milliseconds
+      {
+        input: {
+          value: 1_698_536_712_614, // 2023-10-28T23:45:12.614Z (2023-10-29T01:45:12.614+02:00)
+          inputTimezone: 'Europe/Berlin',
+          amount: { hours: 25 },
         },
         expected: 1_698_626_712_614, // 2023-10-30T00:45:12.614Z (2023-10-30T01:45:12.614+01:00)
       },
@@ -390,6 +400,22 @@ describe('change-date', () => {
           month: 10,
           day: 29,
           hour: 23,
+          minute: 45,
+          second: 12,
+          millisecond: 614,
+          timezone: 'Europe/Berlin',
+        },
+      },
+      {
+        input: {
+          value: DATE_OBJECT,
+          amount: { hours: 25 }, // hours arithmetic is not affected by DST
+        },
+        expected: {
+          year: 2023,
+          month: 10,
+          day: 29, // not 30, as would be the case without DST transition
+          hour: 23, // not 0, as would be the case without DST transition
           minute: 45,
           second: 12,
           millisecond: 614,
