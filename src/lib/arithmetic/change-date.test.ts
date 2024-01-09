@@ -320,12 +320,7 @@ describe('change-date', () => {
     for (const example of EXAMPLES) {
       it(JSON.stringify(example), () => {
         const { value, inputTimezone, amount } = example.input;
-        const actual = isoDateTimeChange(
-          value,
-          inputTimezone,
-          amount,
-          OPTIONS,
-        );
+        const actual = isoDateTimeChange(value, inputTimezone, amount, OPTIONS);
         expect(actual).toEqual(example.expected);
       });
     }

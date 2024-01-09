@@ -4,6 +4,17 @@ All notable changes to the "date-util" will be documented in this file.
 
 ## [Unreleased]
 
+## [0.0.4] - 2024-01-09
+
+### Added
+
+- Add utility functions for converting between various date forms.
+- Add utility functions for adding/subtracting duration from various date forms.
+
+### Removed
+
+- Remove all previsouly existing functions.
+
 ## [0.0.3] - 2024-01-07
 
 ### Changed
