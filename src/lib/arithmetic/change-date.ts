@@ -93,7 +93,7 @@ export function dateObjectChange(
 export function dateObjectTzChange(
   dateObject: DateObjectTz,
   amount: Duration,
-): DateObject {
+): DateObjectTz {
   const { timezone } = dateObject;
 
   const unixMilliseconds = dateObjectTzToUnixMilliseconds(dateObject);
