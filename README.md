@@ -14,6 +14,8 @@ Date forms which are supported:
 - `DateObject` - See [DateObject](#dateobject).
 - `DateObjectTz` - See [DateObjectTz](#dateobjecttz).
 
+**No function will mutate the original object, even if wording for any of the function would seem to imply otherwise.**
+
 ## Installation
 
 ```bash
@@ -53,7 +55,7 @@ This means there are:
 - 1 additional function in total where output date form is the same as input date form - [isoDateTimeToIsoDateTime](#isodatetimetoisodatetime).
 - This all amounts to a total of 43 converter functions.
 
-#### Converter Parameters
+#### Parameters for Converter Functions
 
 ##### Input Date
 
@@ -258,7 +260,7 @@ Here is a list of functions for converting dates between various forms.
 
 Converts from a [DateObject](#dateobject) to Unix milliseconds timestamp.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const input: DateObject = { ... };
@@ -282,7 +284,7 @@ console.log(output3);
 
 Converts from a [DateObject](#dateobject) to Unix seconds timestamp. Milliseconds are truncated, i.e. seconds are not rounded.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const input: DateObject = { ... };
@@ -304,7 +306,7 @@ console.log(output3);
 
 Converts from a [DateObject](#dateobject) to native JavaScript `Date` object.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const input: DateObject = { ... };
@@ -327,7 +329,7 @@ console.log(output);
 
 Converts from a [DateObject](#dateobject) to ISO datetime string.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const input: DateObject = { ... };
@@ -400,7 +402,7 @@ console.log(output10);
 
 Converts from a [DateObject](#dateobject) to ISO date string.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const input: DateObject = { ... };
@@ -442,7 +444,7 @@ console.log(output6);
 
 Converts from a [DateObject](#dateobject) to ISO time string.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const input: DateObject = { ... };
@@ -484,7 +486,7 @@ console.log(output6);
 
 Converts from a [DateObject](#dateobject) to [DateObjectTz](#dateobjecttz).
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const input: DateObject = { ... };
@@ -546,7 +548,7 @@ console.log(output4);
 
 Converts from a [DateObjectTz](#dateobjecttz) to Unix milliseconds timestamp.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const input: DateObjectTz = { ... };
@@ -560,7 +562,7 @@ console.log(output);
 
 Converts from a [DateObjectTz](#dateobjecttz) to Unix seconds timestamp. Milliseconds are truncated, i.e. seconds are not rounded.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const input: DateObjectTz = { ... };
@@ -574,7 +576,7 @@ console.log(output);
 
 Converts from a [DateObjectTz](#dateobjecttz) to native JavaScript `Date` object.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const input: DateObjectTz = { ... };
@@ -588,7 +590,7 @@ console.log(output);
 
 Converts from a [DateObjectTz](#dateobjecttz) to ISO datetime string.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const input: DateObjectTz = { ... };
@@ -608,7 +610,7 @@ console.log(output2);
 
 Converts from a [DateObjectTz](#dateobjecttz) to ISO date string.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const input: DateObjectTz = { ... };
@@ -628,7 +630,7 @@ console.log(output2);
 
 Converts from a [DateObjectTz](#dateobjecttz) to ISO time string.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const input: DateObjectTz = { ... };
@@ -648,7 +650,7 @@ console.log(output2);
 
 Converts from a [DateObjectTz](#dateobjecttz) to [DateObject](#dateobject).
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const input: DateObjectTz = { ... };
@@ -682,7 +684,7 @@ console.log(output2);
 
 Converts from an ISO datetime string to Unix milliseconds timestamp.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const output = isoDateTimeToUnixMilliseconds('2023-12-31T23:45:12.614Z');
@@ -694,7 +696,7 @@ console.log(output);
 
 Converts from an ISO datetime string to Unix seconds timestamp. Milliseconds are truncated, i.e. seconds are not rounded.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const output = isoDateTimeToUnixSeconds('2023-12-31T23:45:12.614Z');
@@ -706,7 +708,7 @@ console.log(output);
 
 Converts from an ISO datetime string to native JavaScript `Date` object.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const output = isoDateTimeToJsDate('2023-12-31T23:45:12.614Z');
@@ -718,7 +720,7 @@ console.log(output);
 
 Converts from an ISO datetime string to (another) ISO datetime string. This can be used to change the format or the timezone offset of the ISO datetime string.
 
-Check [converter parameters](#converter-parameters) section for more information
+Check [converter parameters](#parameters-for-converter-functions) section for more information
 
 ```ts
 const output = isoDateTimeToIsoDateTime('2023-12-31T23:45:12.614Z', {
@@ -734,7 +736,7 @@ console.log(output);
 
 Converts from an ISO datetime string to ISO date string.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const output = isoDateTimeToIsoDate('2023-12-31T23:45:12.614Z', {
@@ -749,7 +751,7 @@ console.log(output);
 
 Converts from an ISO datetime string to ISO time string.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const output = isoDateTimeToIsoTime('2023-12-31T23:45:12.614Z', {
@@ -764,7 +766,7 @@ console.log(output);
 
 Converts from an ISO datetime string to [DateObject](#dateobject).
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const output = isoDateTimeToDateObject('2023-12-31T23:45:12.614Z', 'America/New_York');
@@ -784,7 +786,7 @@ console.log(output);
 
 Converts from an ISO datetime string to [DateObjectTz](#dateobjecttz).
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const output = isoDateTimeToDateObjectTz('2023-12-31T23:45:12.614Z', 'America/New_York');
@@ -805,7 +807,7 @@ console.log(output);
 
 Converts native JavaScript `Date` object to Unix milliseconds timestamp.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const input = new Date('2023-12-31T23:45:12.614Z');
@@ -818,7 +820,7 @@ console.log(output);
 
 Converts native JavaScript `Date` object to Unix seconds timestamp. Milliseconds are truncated, i.e. seconds are not rounded.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const input = new Date('2023-12-31T23:45:12.614Z');
@@ -831,7 +833,7 @@ console.log(output);
 
 Converts native JavaScript `Date` object to ISO datetime string.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const input = new Date('2023-12-31T23:45:12.614Z');
@@ -848,7 +850,7 @@ console.log(output);
 
 Converts native JavaScript `Date` object to ISO date string.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const input = new Date('2023-12-31T23:45:12.614Z');
@@ -864,7 +866,7 @@ console.log(output);
 
 Converts native JavaScript `Date` object to ISO time string.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const input = new Date('2023-12-31T23:45:12.614Z');
@@ -880,7 +882,7 @@ console.log(output);
 
 Converts native JavaScript `Date` object to [DateObject](#dateobject).
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const input = new Date('2023-12-31T23:45:12.614Z');
@@ -901,7 +903,7 @@ console.log(output);
 
 Converts native JavaScript `Date` object to [DateObjectTz](#dateobjecttz).
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const input = new Date('2023-12-31T23:45:12.614Z');
@@ -923,7 +925,7 @@ console.log(output);
 
 Converts Unix milliseconds timestamp to Unix seconds timestamp. Milliseconds are truncated, i.e. seconds are not rounded.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const output = unixMillisecondsToUnixSeconds(1_704_066_312_614);
@@ -935,7 +937,7 @@ console.log(output);
 
 Converts Unix milliseconds timestamp to native JavaScript `Date` object.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const output = unixMillisecondsToJsDate(1_704_066_312_614);
@@ -947,7 +949,7 @@ console.log(output);
 
 Converts Unix milliseconds timestamp to ISO datetime string.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const output = unixMillisecondsToIsoDateTime(1_704_066_312_614, {
@@ -963,7 +965,7 @@ console.log(output);
 
 Converts Unix milliseconds timestamp to ISO date string.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const output = unixMillisecondsToIsoDate(1_704_066_312_614, {
@@ -978,7 +980,7 @@ console.log(output);
 
 Converts Unix milliseconds timestamp to ISO time string.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const output = unixMillisecondsToIsoTime(1_704_066_312_614, {
@@ -993,7 +995,7 @@ console.log(output);
 
 Converts Unix milliseconds timestamp to [DateObject](#dateobject).
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const output = unixMillisecondsToDateObject(1_704_066_312_614, 'America/New_York');
@@ -1013,7 +1015,7 @@ console.log(output);
 
 Converts Unix milliseconds timestamp to [DateObjectTz](#dateobjecttz).
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const output = unixMillisecondsToDateObjectTz(1_704_066_312_614, 'America/New_York');
@@ -1034,7 +1036,7 @@ console.log(output);
 
 Converts Unix seconds timestamp to Unix milliseconds timestamp.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const output = unixSecondsToUnixMilliseconds(1_704_066_312);
@@ -1046,7 +1048,7 @@ console.log(output);
 
 Converts Unix seconds timestamp to native JavaScript `Date` object.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const output = unixSecondsToJsDate(1_704_066_312);
@@ -1058,7 +1060,7 @@ console.log(output);
 
 Converts Unix seconds timestamp to ISO datetime string.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const output = unixSecondsToIsoDateTime(1_704_066_312, {
@@ -1074,7 +1076,7 @@ console.log(output);
 
 Converts Unix seconds timestamp to ISO date string.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const output = unixSecondsToIsoDate(1_704_066_312, {
@@ -1089,7 +1091,7 @@ console.log(output);
 
 Converts Unix seconds timestamp to ISO time string.
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const output = unixSecondsToIsoTime(1_704_066_312, {
@@ -1104,7 +1106,7 @@ console.log(output);
 
 Converts Unix seconds timestamp to [DateObject](#dateobject).
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const output = unixSecondsToDateObject(1_704_066_312, 'America/New_York');
@@ -1124,7 +1126,7 @@ console.log(output);
 
 Converts Unix seconds timestamp to [DateObjectTz](#dateobjecttz).
 
-Check [converter parameters](#converter-parameters) section for more information.
+Check [converter parameters](#parameters-for-converter-functions) section for more information.
 
 ```ts
 const output = unixSecondsToDateObjectTz(1_704_066_312, 'America/New_York');
@@ -1141,9 +1143,9 @@ console.log(output);
 // }
 ```
 
-### Change Date General Information
+### Add Duration to Date General Information
 
-Here is some general information about function that are used for adding or subtracting a duration from a date ([Change Date](#change-date)).
+Here is some general information about function that are used for adding or subtracting a duration from a date ([Add Duration to Date](#add-duration-to-date)).
 
 There is one function for adding/subtracting a duration for each of the six full date forms.
 
@@ -1151,7 +1153,7 @@ To subtract a duration, simply pass a negative number as the duration field valu
 
 These functions should currently work with fractional values in duration fields, but they are meant to be used with integer values.
 
-#### Change Date Parameters
+#### Parameters for Add Duration to Date Functions
 
 ##### Input Date
 
@@ -1195,7 +1197,7 @@ Adding 25 hours to `2023-10-29:00:00:00` in `Europe/Berlin` timezone will result
 
 All date forms except [DateObject](#dateobject) and [DateObjectTz](#dateobjecttz) need to be provided with an `inputTimezone` parameter to be able to do date arithmetic.
 
-`UnixMilliseconds` and `UnixSeconds` obviously have no concept of timezone, so they need to be provided with an `inputTimezone` parameter to generate results consistent with the change functions for other date forms. You can always use `UTC` as the `inputTimezone` parameter if you need results unaffected by DST.
+`UnixMilliseconds` and `UnixSeconds` obviously have no concept of timezone, so they need to be provided with an `inputTimezone` parameter to generate results consistent with the `*Add` functions for other date forms. You can always use `UTC` as the `inputTimezone` parameter if you need results unaffected by DST.
 
 `JsDate` is essentially just a wrapper around Unix milliseconds, so same rules apply.
 
@@ -1205,7 +1207,7 @@ All date forms except [DateObject](#dateobject) and [DateObjectTz](#dateobjecttz
 
 [DateObjectTz](#dateobjecttz) represents a concrete point in time, like `UnixMilliseconds` etc., but it also has a timezone contained within its structure. Therefore, it has all the information it needs to do date arithmetic, and no `inputTimezone` parameter is needed.
 
-##### Change Amount
+##### Add Amount
 
 The `amount` parameter is a [Duration](#duration) object, which contains the amount of time to add/subtract to the input date.
 
@@ -1215,17 +1217,17 @@ This is the third parameter if the function has an `inputTimezone` parameter, se
 
 ##### Output Options
 
-Only `isoDateTimeChange` change has output `options` parameter. It works exactly the same way as in `isoDateTo*` converter functions and has the same defaults. In short, it controls the output ISO format.
+Out of these `*Add` functions, only `isoDateTimeAdd` has output `options` parameter. It works exactly the same way as in `isoDateTo*` converter functions and has the same defaults. In short, `options` controls the output ISO format.
 
-## Change Date
+## Add Duration to Date
 
 Here are functions that can be used to add or subtract a duration from a date.
 
-#### `dateObjectChange`
+#### `dateObjectAdd`
 
-Changes a [DateObject](#dateobject) by adding/subtracting a [duration](#duration).
+Adds/subtracts [duration](#duration) to/from a [DateObject](#dateobject).
 
-Check [change date parameters](#change-date-parameters) section for more information.
+Check [parameters](#parameters-for-add-duration-to-date-functions) section for more information.
 
 ```ts
 const input: DateObject = {
@@ -1237,7 +1239,7 @@ const input: DateObject = {
   second: 12,
   millisecond: 614,
 };
-const output = dateObjectChange(input, { days: 1 });
+const output = dateObjectAdd(input, { days: 1 });
 console.log(output);
 // {
 //   year: 2024,
@@ -1250,11 +1252,11 @@ console.log(output);
 // }
 ```
 
-#### `dateObjectTzChange`
+#### `dateObjectTzAdd`
 
-Changes a [DateObjectTz](#dateobjecttz) by adding/subtracting a [duration](#duration).
+Adds/subtracts [duration](#duration) to/from a [DateObjectTz](#dateobjecttz).
 
-Check [change date parameters](#change-date-parameters) section for more information.
+Check [parameters](#parameters-for-add-duration-to-date-functions) section for more information.
 
 ```ts
 const input: DateObjectTz = {
@@ -1267,7 +1269,7 @@ const input: DateObjectTz = {
   millisecond: 614,
   timezone: 'America/New_York',
 };
-const output = dateObjectTzChange(input, { days: 1 });
+const output = dateObjectTzAdd(input, { days: 1 });
 console.log(output);
 // {
 //   year: 2024,
@@ -1281,27 +1283,27 @@ console.log(output);
 // }
 ```
 
-#### `isoDateTimeChange`
+#### `isoDateTimeAdd`
 
-Changes an ISO datetime by adding/subtracting a [duration](#duration).
+Adds/subtracts [duration](#duration) to/from an ISO datetime.
 
-Check [change date parameters](#change-date-parameters) section for more information.
+Check [parameters](#parameters-for-add-duration-to-date-functions) section for more information.
 
 ```ts
-const output1 = isoDateTimeChange('2023-10-28T23:45:12Z', 'UTC', { days: 1 });
+const output1 = isoDateTimeAdd('2023-10-28T23:45:12Z', 'UTC', { days: 1 });
 console.log(output1);
 // 2023-10-29T23:45:12Z
 
-const output2 = isoDateTimeChange('2023-10-28T23:45:12Z', 'Europe/Berlin', { days: 1 });
+const output2 = isoDateTimeAdd('2023-10-28T23:45:12Z', 'Europe/Berlin', { days: 1 });
 console.log(output2);
 // 2023-10-30T00:45:12Z
-// (since change was made in Europe/Berlin timezone
+// (since add was made in Europe/Berlin timezone
 //   during the DST transition, the difference is 25 hours)
 // (output format still uses 'Z' suffix, which is dictated
 //   by the options parameter, or the defaults in this case,
 //   since the options parameter is not provided)
 
-const output3 = isoDateTimeChange(
+const output3 = isoDateTimeAdd(
   // providing '2023-10-28T23:45:12.614Z' as the input,
   //   which is the same point in time,
   //   would produce the same result
@@ -1309,7 +1311,7 @@ const output3 = isoDateTimeChange(
   // defines the timezone of the conversion
   //   (takes into account the DST transition)
   'Europe/Berlin',
-  // change amount
+  // add amount
   { days: 1 },
   // output format
   {
@@ -1322,55 +1324,55 @@ console.log(output3);
 // (same local time as input, one day later)
 ```
 
-#### `jsDateChange`
+#### `jsDateAdd`
 
-Changes a native JavaScript `Date` object by adding/subtracting a [duration](#duration).
+Adds/subtracts [duration](#duration) to/from a native JavaScript `Date` object.
 
-Check [change date parameters](#change-date-parameters) section for more information.
+Check [parameters](#parameters-for-add-duration-to-date-functions) section for more information.
 
 ```ts
 const input = new Date('2023-12-31T23:45:12.614Z');
-const output = jsDateChange(input, 'UTC', { days: 1 });
+const output = jsDateAdd(input, 'UTC', { days: 1 });
 console.log(output);
 // 2024-01-01T23:45:12.614Z
 ```
 
-#### `unixMillisecondsChange`
+#### `unixMillisecondsAdd`
 
-Changes a Unix milliseconds timestamp by adding/subtracting a [duration](#duration).
+Adds/subtracts [duration](#duration) to/from a Unix milliseconds timestamp.
 
-Check [change date parameters](#change-date-parameters) section for more information.
+Check [parameters](#parameters-for-add-duration-to-date-functions) section for more information.
 
 ```ts
-const output = unixMillisecondsChange(1_704_066_312_614, 'UTC', { days: 1 });
+const output = unixMillisecondsAdd(1_704_066_312_614, 'UTC', { days: 1 });
 console.log(output);
 // 1_704_152_712_614
 ```
 
-#### `unixSecondsChange`
+#### `unixSecondsAdd`
 
-Changes a Unix seconds timestamp by adding/subtracting a [duration](#duration).
+Adds/subtracts [duration](#duration) to/from a Unix seconds timestamp.
 
 Any milliseconds in the resulting timestamp are truncated, i.e. seconds are not rounded.
 
 Note that, however, only the result is truncated. You can still pass `milliseconds` in the `amount`, and if the value is less than `0` or equal to or greater than `1000`, it will affect the result.
 
-Check [change date parameters](#change-date-parameters) section for more information.
+Check [parameters](#parameters-for-add-duration-to-date-functions) section for more information.
 
 ```ts
-const output1 = unixSecondsChange(1_704_066_312, 'UTC', { days: 1 });
+const output1 = unixSecondsAdd(1_704_066_312, 'UTC', { days: 1 });
 console.log(output1);
 // 1_704_152_712
 
-const output2 = unixSecondsChange(1_704_066_312, 'UTC', { milliseconds: 614 });
+const output2 = unixSecondsAdd(1_704_066_312, 'UTC', { milliseconds: 614 });
 console.log(output2);
 // 1_704_066_312
 
-const output3 = unixSecondsChange(1_704_066_312, 'UTC', { milliseconds: 1614 });
+const output3 = unixSecondsAdd(1_704_066_312, 'UTC', { milliseconds: 1614 });
 console.log(output3);
 // 1_704_066_313
 
-const output4 = unixSecondsChange(1_704_066_312, 'UTC', { milliseconds: -1 });
+const output4 = unixSecondsAdd(1_704_066_312, 'UTC', { milliseconds: -1 });
 console.log(output4);
 // 1_704_066_311
 ```

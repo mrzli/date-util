@@ -6,16 +6,16 @@ import {
   ToIsoDateTimeOptions,
 } from '../types';
 import {
-  dateObjectChange,
-  dateObjectTzChange,
-  isoDateTimeChange,
-  jsDateChange,
-  unixMillisecondsChange,
-  unixSecondsChange,
-} from './change-date';
+  dateObjectAdd,
+  dateObjectTzAdd,
+  isoDateTimeAdd,
+  jsDateAdd,
+  unixMillisecondsAdd,
+  unixSecondsAdd,
+} from './add-date';
 
 describe('change-date', () => {
-  describe('unixMillisecondsChange()', () => {
+  describe('unixMillisecondsAdd()', () => {
     interface Example {
       readonly input: {
         readonly value: number;
@@ -147,13 +147,13 @@ describe('change-date', () => {
     for (const example of EXAMPLES) {
       it(JSON.stringify(example), () => {
         const { value, inputTimezone, amount } = example.input;
-        const actual = unixMillisecondsChange(value, inputTimezone, amount);
+        const actual = unixMillisecondsAdd(value, inputTimezone, amount);
         expect(actual).toEqual(example.expected);
       });
     }
   });
 
-  describe('unixSecondsChange()', () => {
+  describe('unixSecondsAdd()', () => {
     interface Example {
       readonly input: {
         readonly value: number;
@@ -217,13 +217,13 @@ describe('change-date', () => {
     for (const example of EXAMPLES) {
       it(JSON.stringify(example), () => {
         const { value, inputTimezone, amount } = example.input;
-        const actual = unixSecondsChange(value, inputTimezone, amount);
+        const actual = unixSecondsAdd(value, inputTimezone, amount);
         expect(actual).toEqual(example.expected);
       });
     }
   });
 
-  describe('jsDateTimeChange()', () => {
+  describe('jsDateTimeAdd()', () => {
     interface Example {
       readonly input: {
         readonly value: string;
@@ -264,7 +264,7 @@ describe('change-date', () => {
       it(JSON.stringify(example), () => {
         const { value, inputTimezone, amount } = example.input;
         const finalValue = new Date(value);
-        const actual = jsDateChange(
+        const actual = jsDateAdd(
           finalValue,
           inputTimezone,
           amount,
@@ -274,7 +274,7 @@ describe('change-date', () => {
     }
   });
 
-  describe('isoDateTimeChange()', () => {
+  describe('isoDateTimeAdd()', () => {
     interface Example {
       readonly input: {
         readonly value: string;
@@ -320,13 +320,13 @@ describe('change-date', () => {
     for (const example of EXAMPLES) {
       it(JSON.stringify(example), () => {
         const { value, inputTimezone, amount } = example.input;
-        const actual = isoDateTimeChange(value, inputTimezone, amount, OPTIONS);
+        const actual = isoDateTimeAdd(value, inputTimezone, amount, OPTIONS);
         expect(actual).toEqual(example.expected);
       });
     }
   });
 
-  describe('dateObjectChange()', () => {
+  describe('dateObjectAdd()', () => {
     const DATE_OBJECT: DateObject = {
       year: 2023,
       month: 10,
@@ -366,13 +366,13 @@ describe('change-date', () => {
     for (const example of EXAMPLES) {
       it(JSON.stringify(example), () => {
         const { value, amount } = example.input;
-        const actual = dateObjectChange(value, amount);
+        const actual = dateObjectAdd(value, amount);
         expect(actual).toEqual(example.expected);
       });
     }
   });
 
-  describe('dateObjectTzChange()', () => {
+  describe('dateObjectTzAdd()', () => {
     const DATE_OBJECT: DateObjectTz = {
       year: 2023,
       month: 10,
@@ -430,7 +430,7 @@ describe('change-date', () => {
     for (const example of EXAMPLES) {
       it(JSON.stringify(example), () => {
         const { value, amount } = example.input;
-        const actual = dateObjectTzChange(value, amount);
+        const actual = dateObjectTzAdd(value, amount);
         expect(actual).toEqual(example.expected);
       });
     }

@@ -4,6 +4,12 @@ All notable changes to the "date-util" will be documented in this file.
 
 ## [Unreleased]
 
+## [0.0.5] - 2024-01-10
+
+### Changed
+
+- Rename all `*Change` function to `*Add` as it better describes what they do.
+
 ### Fixed
 
 - Fix small type error in `dateObjectTzChange`.
