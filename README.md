@@ -87,7 +87,7 @@ npm install --save @gmjs/date-util
 - [unixSecondsToDateObject](#unixsecondstodateobject) - Converts from a Unix seconds timestamp to [DateObject](#dateobject).
 - [unixSecondsToDateObjectTz](#unixsecondstodateobjecttz) - Converts from a Unix seconds timestamp to [DateObjectTz](#dateobjecttz).
 
-### Add Duration to Date
+#### Add Duration to Date
 
 - [dateObjectAdd](#dateobjectadd) - Adds a duration to a [DateObject](#dateobject).
 - [dateObjectTzAdd](#dateobjecttzadd) - Adds a duration to a [DateObjectTz](#dateobjecttz).
