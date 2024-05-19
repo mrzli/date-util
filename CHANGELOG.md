@@ -4,6 +4,13 @@ All notable changes to the "date-util" will be documented in this file.
 
 ## [Unreleased]
 
+## [0.0.6] - 2024-05-19
+
+### Changed
+
+- Update dependencies.
+- Update project configurations to match dependency changes.
+
 ## [0.0.5] - 2024-01-10
 
 ### Changed
