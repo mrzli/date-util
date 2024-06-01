@@ -50,12 +50,12 @@ npm install --save @gmjs/date-util
 
 - [isoDateTimeToUnixMilliseconds](#isodatetimetounixmilliseconds) - Converts from an ISO datetime string to Unix milliseconds timestamp.
 - [isoDateTimeToUnixSeconds](#isodatetimetounixseconds) - Converts from an ISO datetime string to Unix seconds timestamp.
-- [isoDateTimeToJsDate](#isodatetotojsdate) - Converts from an ISO datetime string to native JavaScript `Date` object.
+- [isoDateTimeToJsDate](#isodatetimetojsdate) - Converts from an ISO datetime string to native JavaScript `Date` object.
 - [isoDateTimeToIsoDateTime](#isodatetimetoisodatetime) - Converts from an ISO datetime string to (another) ISO datetime string.
-- [isoDateTimeToIsoDate](#isodatetotoisodate) - Converts from an ISO datetime string to ISO date string.
-- [isoDateTimeToIsoTime](#isodatetotoisotime) - Converts from an ISO datetime string to ISO time string.
-- [isoDateTimeToDateObject](#isodatetodateobject) - Converts from an ISO datetime string to [DateObject](#dateobject).
-- [isoDateTimeToDateObjectTz](#isodatetodateobjecttz) - Converts from an ISO datetime string to [DateObjectTz](#dateobjecttz).
+- [isoDateTimeToIsoDate](#isodatetimetoisodate) - Converts from an ISO datetime string to ISO date string.
+- [isoDateTimeToIsoTime](#isodatetimetoisotime) - Converts from an ISO datetime string to ISO time string.
+- [isoDateTimeToDateObject](#isodatetimetodateobject) - Converts from an ISO datetime string to [DateObject](#dateobject).
+- [isoDateTimeToDateObjectTz](#isodatetimetodateobjecttz) - Converts from an ISO datetime string to [DateObjectTz](#dateobjecttz).
 
 ##### `jsDateTo*`
 

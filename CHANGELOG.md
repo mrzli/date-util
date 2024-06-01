@@ -4,6 +4,12 @@ All notable changes to the "date-util" will be documented in this file.
 
 ## [Unreleased]
 
+## [0.0.9] - 2024-06-01
+
+### Changed
+
+- Fix some links in readme.
+
 ## [0.0.8] - 2024-05-19
 
 ### Changed
